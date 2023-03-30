@@ -35,16 +35,9 @@ const router = useRouter()
                                 @click="deletemethod(item.productUrlId)">Delete</button>
                         </div>
                     </td>
-            </tr>
-        </tbody>
-    </table>
-    <!-- <nav class="self-end mr-10">
-            <button class="bg-blue-700 px-4 py-2 rounded-md hover:bg-blue-600 hover:scale-110 text-lg"
-                                                    :class="`${this.pageno < 1 ? `cursor-not-allowed` : ``}`" @click="this.pageno--"
-                                                                                                    :disabled="this.pageno < 1">Previous</button>&emsp;
-                                                                                                    <button class="bg-blue-700 px-4 py-2 rounded-md hover:bg-blue-600 hover:scale-110 text-lg"
-                                                                                                    @click="this.pageno++">Next</button>
-                                                                                                    </nav> -->
+                </tr>
+            </tbody>
+        </table>
         <Transition>
             <div v-show="this.toast"
                 class="fixed z-50 duration-500 inset-0 flex items-end justify-center px-4 py-6 pointer-events-none sm:p-6 sm:items-start sm:justify-end">
@@ -80,16 +73,28 @@ const router = useRouter()
                             </div>
                         </div>
                     </div>
-            </div>
+                </div>
             </div>
         </Transition>
-        <!-- <v-pagination v-model="this.pageno" :length="count" class="w-1/3 self-end mr-10 "
-                                                                                                    :class="`${this.productadd ? `hidden` : ``}`"></v-pagination> -->
+        <nav class="flex justify-end items-center">
+            <div>
+                <span class="mr-5 select-none font-semibold text-xl border-2 p-2 shadow-2xl">Page {{ this.pageno+1 }} of {{ this.count }}</span>
+            </div>
+            <div>
+                <button @click="this.pageno--" :disabled="this.pageno < 1"
+                    class="inline-flex items-center px-3 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150 mr-4 disabled:opacity-50 disabled:cursor-not-allowed">&laquo;
+                    Previous</button>
+                <button @click="this.pageno++"
+                    class="inline-flex items-center px-3 py-2 border border-gray-300 text-sm leading-5 font-medium rounded-md text-gray-700 bg-white hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue active:text-gray-800 active:bg-gray-50 transition ease-in-out duration-150 disabled:opacity-50 disabled:cursor-not-allowed">Next
+                    &raquo;</button>
+            </div>
+        </nav>
     </main>
 </template>
 <script>
 import { store } from '../store/store';
-import axiosClient from '../service/api'
+import axiosClient from '../axios_config'
+import route from '../router/index'
 export default {
     data() {
         return {
@@ -148,26 +153,17 @@ export default {
     watch: {
         pageno() {
             const data1 = {
-                no: this.pageno - 1,
+                no: this.pageno,
                 sortBy: 1,
                 min: 0,
                 max: 100000
             }
-
-            fetch("http://localhost:2000/getallproducts", {
-                method: "POST", // or 'PUT'
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data1)
-            }).then((response) => response.json())
-                .then((data) => {
-                    this.data = data.data
-                    this.count = Math.round(data.count / 10)
-                })
-                .catch((error) => {
-                    console.error("error:", error);
-                });
+            axiosClient.post('/getallproducts', JSON.stringify(data1)).then((response) => {
+            this.data = response.data.data
+            this.count = Math.round(response.data.count)
+        }).catch(function (error) {
+            route.push('/servererror')
+        })
         },
         toast() {
             setTimeout(() => {
@@ -175,24 +171,20 @@ export default {
             }, 2000)
         }
     },
-    async mounted() {
+    mounted() {
         const data1 = {
             no: this.pageno,
             sortBy: 1,
             min: 0,
             max: 100000
         }
-
         //axios
-        await axiosClient.post('/getallproducts', JSON.stringify(data1)).then((response)=> {
-            // console.log(this.count);
-            // console.log(response); type
-            this.data=response.data.data
+        axiosClient.post('/getallproducts', JSON.stringify(data1)).then((response) => {
+            this.data = response.data.data
+            this.count = response.data.count
         }).catch(function (error) {
-            console.log(error);
+            route.push('/servererror')
         })
-
-
     }
 }
 </script>
@@ -205,5 +197,4 @@ export default {
 .v-enter-from,
 .v-leave-to {
     opacity: 0;
-}
-</style>
+}</style>

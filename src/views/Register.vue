@@ -25,6 +25,7 @@ import router from '../router/index';
 </template>
 
 <script>
+import axiosClient from '../axios_config'
 export default {
   data() {
     return {
@@ -33,9 +34,7 @@ export default {
       email: '',
       errormsg: ''
     }
-  }
-
-  ,
+  },
   methods: {
     submitclick() {
       const data = {
@@ -44,24 +43,13 @@ export default {
         email: this.email,
         mobile: 9876543210
       }
-      fetch("http://localhost:2000/register", {
-        method: "POST", // or 'PUT'
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(data)
-      }).then((response) => response.json())
-        .then((data) => {
-          if (data.status) {
+      axiosClient.post('/register', JSON.stringify(data)).then((response) => {
+        if (response.data.status) {
             router.push("/")
           }
-          else {
-            this.errormsg = data.errorMessage
-          }
-        })
-        .catch((error) => {
-          console.error("error:", error);
-        });
+      }).catch((error) => {
+        this.errormsg = error.response.data.errorMessage        
+      })
     }
   }
 }
