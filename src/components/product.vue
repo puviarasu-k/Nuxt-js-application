@@ -1,6 +1,5 @@
 <script setup>
 import { useRouter } from 'vue-router'
-
 const router = useRouter()
 </script>
 <template>
@@ -35,17 +34,17 @@ const router = useRouter()
                                 class="font-semibold py-2 w-full rounded-lg hover:bg-gray-500 hover:text-white active:scale-105"
                                 @click="deletemethod(item.productUrlId)">Delete</button>
                         </div>
-                </td>
+                    </td>
             </tr>
         </tbody>
     </table>
     <!-- <nav class="self-end mr-10">
             <button class="bg-blue-700 px-4 py-2 rounded-md hover:bg-blue-600 hover:scale-110 text-lg"
-                                            :class="`${this.pageno < 1 ? `cursor-not-allowed` : ``}`" @click="this.pageno--"
-                                            :disabled="this.pageno < 1">Previous</button>&emsp;
-                                            <button class="bg-blue-700 px-4 py-2 rounded-md hover:bg-blue-600 hover:scale-110 text-lg"
-                                            @click="this.pageno++">Next</button>
-                                            </nav> -->
+                                                    :class="`${this.pageno < 1 ? `cursor-not-allowed` : ``}`" @click="this.pageno--"
+                                                                                                    :disabled="this.pageno < 1">Previous</button>&emsp;
+                                                                                                    <button class="bg-blue-700 px-4 py-2 rounded-md hover:bg-blue-600 hover:scale-110 text-lg"
+                                                                                                    @click="this.pageno++">Next</button>
+                                                                                                    </nav> -->
         <Transition>
             <div v-show="this.toast"
                 class="fixed z-50 duration-500 inset-0 flex items-end justify-center px-4 py-6 pointer-events-none sm:p-6 sm:items-start sm:justify-end">
@@ -80,93 +79,31 @@ const router = useRouter()
                                 </div>
                             </div>
                         </div>
-                </div>
-                </div>
+                    </div>
+            </div>
             </div>
         </Transition>
         <!-- <v-pagination v-model="this.pageno" :length="count" class="w-1/3 self-end mr-10 "
-                                            :class="`${this.productadd ? `hidden` : ``}`"></v-pagination> -->
+                                                                                                    :class="`${this.productadd ? `hidden` : ``}`"></v-pagination> -->
     </main>
 </template>
 <script>
+import { store } from '../store/store';
+import axiosClient from '../service/api'
 export default {
     data() {
         return {
             data: [],
             pageno: 0,
             count: 0,
-            editclick: false,
             actionon: '',
-            productUrlId: '',
             toast: false,
             message: '',
-            summa: this.which
         }
     },
-    inject: ['productAmount', 'productName', 'category', 'quantity'],
     methods: {
         actionmethod(item) {
             this.actionon = this.actionon != '' ? '' : item._id
-        },
-        actionclick() {
-            if (true) {
-                const data = {
-                    productName: this.productName,
-                    price: this.productAmount,
-                    category: this.category,
-                    quantity: this.quantity,
-                }
-                fetch("http://localhost:2000/addproducts", {
-                    method: "POST", // or 'PUT'
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(data)
-                })
-                this.message = "Product Added Succesfully"
-                this.toast = true
-            }
-            else if (this.editclick) {
-                console.log("add");
-                const data = {
-                    productName: this.productName,
-                    productAmount: this.productAmount,
-                    category: this.category,
-                    quantity: this.quantity,
-                    productUrlId: this.productUrlId
-                }
-                fetch("http://localhost:2000/editproducts", {
-                    method: "POST", // or 'PUT'
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(data)
-                })
-                this.editclick = false
-                this.message = "Product Edited Succesfully"
-                this.toast = true
-            }
-            const data1 = {
-                no: this.pageno,
-                sortBy: 1,
-                min: 0,
-                max: 100000
-            }
-
-            fetch("http://localhost:2000/getallproducts", {
-                method: "POST", // or 'PUT'
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data1)
-            }).then((response) => response.json())
-                .then((data) => {
-                    this.data = data.data
-                    this.count = data.count / 10
-                })
-                .catch((error) => {
-                    console.error("error:", error);
-                });
         },
         deletemethod(item) {
             fetch("http://localhost:2000/deleteproducts/" + item).then((response) => response.json()).then((data) => {
@@ -199,13 +136,11 @@ export default {
             this.toast = true
         },
         editmethod(item) {
-            this.productName = item.productName
-            this.productAmount = item.productVariant[0].price
-            this.category = item.categoryName
-            this.quantity = item.totalQuantity
-            this.productUrlId = item.productUrlId
-            // this.editclick = true
-            // this.actionon = ''
+            store.details.productName = item.productName
+            store.details.productAmount = item.productVariant[0].price
+            store.details.category = item.categoryName
+            store.details.quantity = item.totalQuantity
+            store.details.productUrlId = item.productUrlId
             this.$emit("tabname", "Edit Product");
             this.$emit("tab", true);
         }
@@ -240,7 +175,7 @@ export default {
             }, 2000)
         }
     },
-    mounted() {
+    async mounted() {
         const data1 = {
             no: this.pageno,
             sortBy: 1,
@@ -248,25 +183,20 @@ export default {
             max: 100000
         }
 
-        fetch("http://localhost:2000/getallproducts", {
-            method: "POST", // or 'PUT'
-            headers: {
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data1)
-        }).then((response) => response.json())
-            .then((data) => {
-                this.data = data.data
-                this.count = Math.round(data.count / 10)
-            })
-            .catch((error) => {
-                console.error("error:", error);
-            });
+        //axios
+        await axiosClient.post('/getallproducts', JSON.stringify(data1)).then((response)=> {
+            // console.log(this.count);
+            // console.log(response); type
+            this.data=response.data.data
+        }).catch(function (error) {
+            console.log(error);
+        })
+
+
     }
 }
 </script>
 <style scoped>
-/* we will explain what these classes do next! */
 .v-enter-active,
 .v-leave-active {
     transition: opacity 1s ease;

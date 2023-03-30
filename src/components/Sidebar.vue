@@ -5,7 +5,7 @@ const router = useRouter()
 const dta = router.currentRoute.value.name
 </script>
 <template>
-    <main class="shadow-2xl bg-gradient-to-b from-slate-700 to-slate-300 relative top-0 h-screen w-48">
+    <main class="shadow-2xl bg-gradient-to-b from-slate-700 to-slate-500 relative top-0 h-screen w-48">
         <h2 class="text-3xl font-serif text-orange-400 pt-3  text-center">Test</h2>
         <hr class="my-4">
         <section class="flex flex-col items-center gap-5">
@@ -20,8 +20,8 @@ const dta = router.currentRoute.value.name
                             stroke="#d6d6d6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
                     </g>
                 </svg>
-                <RouterLink class="text-white text-xl  group-hover:text-green-600" to="/carts"
-                    :class="`${dta == 'carts' ? `text-green-900` : ``}`">Cart
+                <RouterLink class="text-white text-xl  group-hover:text-orange-300" to="/carts"
+                    :class="`${dta == 'carts' ? `text-orange-300` : ``}`">Cart
                 </RouterLink>
             </section>
             <section class="flex items-center w-full group cursor-pointer">
@@ -51,8 +51,8 @@ const dta = router.currentRoute.value.name
                         </g>
                     </g>
                 </svg>
-                <RouterLink :class="`${dta == 'products' ? `text-green-600` : ``}`"
-                    class="text-white text-xl group-hover:text-green-600" to="/products">Products</RouterLink>
+                <RouterLink :class="`${dta == 'products' ? `text-orange-300` : ``}`"
+                    class="text-white text-xl group-hover:text-orange-300" to="/products">Products</RouterLink>
             </section>
             <section class="flex items-center cursor-pointer group w-full">
                 <svg class="w-10" width="20px" height="20px" viewBox="0 0 24 24" fill="none"
@@ -70,12 +70,12 @@ const dta = router.currentRoute.value.name
                             stroke-linejoin="round"></path>
                     </g>
                 </svg>
-                <RouterLink :class="`${dta == 'settings' ? `text-green-600` : ``}`"
-                    class="text-white text-xl group-hover:text-green-600" to="/settings">Settings</RouterLink>
+                <RouterLink :class="`${dta == 'settings' ? `text-orange-300` : ``}`"
+                    class="text-white text-xl group-hover:text-orange-300" to="/settings">Settings</RouterLink>
             </section>
             <details class="text-white group text-lg cursor-pointer select-none w-full flex flex-col">
                 <summary class=" flex items-center justify-between text-xl">
-                    <h1 class="flex items-center"><svg class="w-10" width="20px" height="20px" viewBox="0 0 24 24"
+                    <h1 class="flex items-center hover:text-orange-300"><svg class="w-10" width="20px" height="20px" viewBox="0 0 24 24"
                             fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -99,8 +99,8 @@ const dta = router.currentRoute.value.name
                         </g>
                     </svg>
                 </summary>
-                <section :class="`${dta == 'buyer' ? `bg-gradient-to-r from-slate-700 to-white` : ``}`"
-                    class="flex items-center cursor-pointer justify-center py-1 w-full">
+                <section
+                    class="flex items-center cursor-pointer ml-8 py-1 w-full">
                     <svg fill="#c9c9c9" xmlns="http://www.w3.org/2000/svg" width="30px" height="30px" viewBox="0 0 100 100"
                         enable-background="new 0 0 100 100" xml:space="preserve" stroke="#c9c9c9">
                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -124,10 +124,10 @@ const dta = router.currentRoute.value.name
                             </g>
                         </g>
                     </svg>
-                    <RouterLink class="text-white text-xl hover:text-green-600" to="/buyer">Buyers</RouterLink>
+                    <RouterLink :class="`${dta == 'buyer' ? `text-orange-300` : ``}`" class="text-white text-xl hover:text-orange-300" to="/buyer">Buyers</RouterLink>
                 </section>
-                <section :class="`${dta == 'seller' ? `bg-gradient-to-r from-slate-700 ` : ``}`"
-                    class="flex items-center  cursor-pointer justify-center w-full">
+                <section 
+                    class="flex items-center  cursor-pointer ml-8 w-full">
                     <svg fill="#cfcfcf" width="35px" height="35px" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"
                         stroke="#cfcfcf">
                         <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
@@ -146,7 +146,7 @@ const dta = router.currentRoute.value.name
                             </path>
                         </g>
                     </svg>
-                    <RouterLink class="text-white text-xl hover:text-green-600" to="/seller">Sellers</RouterLink>
+                    <RouterLink :class="`${dta == 'seller' ? `text-orange-300` : ``}`" class="text-white text-xl hover:text-orange-300" to="/seller">Sellers</RouterLink>
                 </section>
             </details>
         </section>
