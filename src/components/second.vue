@@ -41,6 +41,7 @@ import { store } from '../store/store'
 </template>
 
 <script>
+import authservice from '../service/axios_config'
 export default {
     data() {
         return {
@@ -49,21 +50,21 @@ export default {
             category: store.details.category,
             quantity: store.details.quantity,
             productUrlId: store.details.productUrlId,
-            name :this.currentab.value
+            name: this.currentab.value
         }
     },
     inject: [],
     unmounted() {
         this.$emit("tabname", "Add Product");
-        store.details.productName=''
-        store.details.productAmount=Number
-        store.details.category=''
-        store.details.quantity=Number
-        store.details.productUrlId=''
+        store.details.productName = ''
+        store.details.productAmount = Number
+        store.details.category = ''
+        store.details.quantity = Number
+        store.details.productUrlId = ''
     },
     inject: ['currentab'],
     methods: {
-        submit() {
+        async submit() {
             if (this.currentab == "Add Product") {
                 const data = {
                     productName: this.productName,
@@ -71,13 +72,7 @@ export default {
                     category: this.category,
                     quantity: this.quantity,
                 }
-                fetch("http://localhost:2000/addproducts", {
-                    method: "POST", // or 'PUT'
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(data)
-                })
+                await authservice.addProduct(data)
             }
             else {
                 const data = {
@@ -87,13 +82,7 @@ export default {
                     quantity: this.quantity,
                     productUrlId: this.productUrlId
                 }
-                fetch("http://localhost:2000/editproducts", {
-                    method: "POST", // or 'PUT'
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                    body: JSON.stringify(data)
-                })
+                await authservice.editProduct(data)
             }
         }
     }

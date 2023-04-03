@@ -21,7 +21,7 @@ const dta = router.currentRoute.value.name
                     </g>
                 </svg>
                 <RouterLink class="text-white text-xl  group-hover:text-orange-300" to="/carts"
-                    :class="`${dta == 'carts' ? `text-orange-300` : ``}`">Cart
+                    :class="`${dta == 'carts' ? `text-orange-500` : ``}`">Cart
                 </RouterLink>
             </section>
             <section class="flex items-center w-full group cursor-pointer">
@@ -51,7 +51,7 @@ const dta = router.currentRoute.value.name
                         </g>
                     </g>
                 </svg>
-                <RouterLink :class="`${dta == 'products' ? `text-orange-300` : ``}`"
+                <RouterLink :class="`${dta == 'products' ? `text-orange-500` : ``}`"
                     class="text-white text-xl group-hover:text-orange-300" to="/products">Products</RouterLink>
             </section>
             <section class="flex items-center cursor-pointer group w-full">
@@ -70,10 +70,10 @@ const dta = router.currentRoute.value.name
                             stroke-linejoin="round"></path>
                     </g>
                 </svg>
-                <RouterLink :class="`${dta == 'settings' ? `text-orange-300` : ``}`"
+                <RouterLink :class="`${dta == 'settings' ? `text-orange-500` : ``}`"
                     class="text-white text-xl group-hover:text-orange-300" to="/settings">Settings</RouterLink>
             </section>
-            <details class="text-white group text-lg cursor-pointer select-none w-full flex flex-col">
+            <details class="text-white group text-lg cursor-pointer select-none w-full flex flex-col select-none">
                 <summary class=" flex items-center justify-between text-xl">
                     <h1 class="flex items-center hover:text-orange-300"><svg class="w-10" width="20px" height="20px" viewBox="0 0 24 24"
                             fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000">
@@ -124,7 +124,7 @@ const dta = router.currentRoute.value.name
                             </g>
                         </g>
                     </svg>
-                    <RouterLink :class="`${dta == 'buyer' ? `text-orange-300` : ``}`" class="text-white text-xl hover:text-orange-300" to="/buyer">Buyers</RouterLink>
+                    <RouterLink :class="`${dta == 'buyer' ? `text-orange-500` : ``}`" class="text-white text-xl hover:text-orange-300" to="/buyer">Buyers</RouterLink>
                 </section>
                 <section 
                     class="flex items-center  cursor-pointer ml-8 w-full">
@@ -146,7 +146,7 @@ const dta = router.currentRoute.value.name
                             </path>
                         </g>
                     </svg>
-                    <RouterLink :class="`${dta == 'seller' ? `text-orange-300` : ``}`" class="text-white text-xl hover:text-orange-300" to="/seller">Sellers</RouterLink>
+                    <RouterLink :class="`${dta == 'seller' ? `text-orange-500` : ``}`" class="text-white text-xl hover:text-orange-300" to="/seller">Sellers</RouterLink>
                 </section>
             </details>
         </section>

@@ -8,10 +8,10 @@ import { store } from '../store/store'
       <h1 class="px-8 text-lg bg-gradient-to-r from-orange-400 to-red-400 font-semibold py-2 rounded-full h-fit">Welcome
       </h1>
       <input placeholder="Enter Username"
-        class="w-96 h-10 pl-2 border-solid outline-orange-500 duration-700 transition-all focus:placeholder:-translate-y-3 border-b-[1px] border-black"
+        class="w-96 h-10 pl-2 border-solid outline-orange-500 border-b-[1px] border-black"
         v-model="username" required type="text">
       <input placeholder="Enter Password"
-        class="w-96 h-10 translate-x-2 transform ease-in-out border-solid outline-orange-500 duration-700 delay-700 focus:placeholder:translate-x-20 transition border-b-[1px] border-black"
+        class="w-96 h-10 pl-2 border-solid outline-orange-500 border-b-[1px] border-black"
         v-model="password" required type="Password">
       <section class="flex items-center ">
         <input required type="checkbox">
@@ -26,7 +26,7 @@ import { store } from '../store/store'
 </template>
 
 <script>
-import axiosClient from '../axios_config'
+import authservice from '../service/axios_config'
 export default {
   data() {
     return {
@@ -36,17 +36,21 @@ export default {
     }
   },
   methods: {
-    submitclick() {
+    async submitclick() {
       const data = {
         username: this.username,
         password: this.password
       }
-      axiosClient.post('/login', JSON.stringify(data)).then((response) => {
-        store.username = response.data.nameuser
+      try {
+        var now = new Date();
+        now.setTime(now.getTime() + (10 * 60 * 1000));
+        const op = await authservice.login(data);
+        document.cookie = `token=${op.data.token}; expires=${now.toUTCString()}`;
+        localStorage.setItem("username", op.data.nameuser);
         router.push('/products')
-      }).catch((error) => {
+      } catch (error) {
         this.errormsg = error.response.data.message
-      })
+      }
     }
   }
 }

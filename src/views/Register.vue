@@ -25,7 +25,7 @@ import router from '../router/index';
 </template>
 
 <script>
-import axiosClient from '../axios_config'
+import authservice from '../service/axios_config'
 export default {
   data() {
     return {
@@ -36,20 +36,21 @@ export default {
     }
   },
   methods: {
-    submitclick() {
+    async submitclick() {
       const data = {
         username: this.username,
         password: this.password,
         email: this.email,
         mobile: 9876543210
       }
-      axiosClient.post('/register', JSON.stringify(data)).then((response) => {
-        if (response.data.status) {
-            router.push("/")
-          }
-      }).catch((error) => {
-        this.errormsg = error.response.data.errorMessage        
-      })
+      try {
+        const op = await authservice.register(data);
+        if (op.data.status) {
+          router.push("/")
+        }
+      } catch (error) {
+        this.errormsg = error.response.data.errorMessage
+      }
     }
   }
 }

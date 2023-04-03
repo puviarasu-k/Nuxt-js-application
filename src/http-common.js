@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosClient = axios.create({
-    baseURL: 'http://localhost:2000',
+    baseURL: "http://localhost:2000",
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
@@ -11,8 +11,8 @@ const axiosClient = axios.create({
 
 axiosClient.interceptors.request.use(function (config) {
     // Do something before request is sent
-    config.headers['summa'] = 'puviarasu';
-    console.log(config);
+    config.headers['Token'] = document.cookie;
+    console.log("req");
     return config;
 }, function (error) {
     // Do something with request error
@@ -22,14 +22,12 @@ axiosClient.interceptors.request.use(function (config) {
 
 axiosClient.interceptors.response.use(
     function (response) {
-        console.log(response);
+        console.log("res");
+        // Do something after response come here
         return response;
     },
     function (error) {
-        let res = error.response;
-        // if (res.status == 401) {
-        //     window.location.href = "/"
-        // }
+        // Do something with response error
         return Promise.reject(error);
     }
 )

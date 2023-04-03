@@ -4,6 +4,22 @@ const router = useRouter()
 </script>
 <template>
     <main class="flex w-full h-full` flex-col gap-4 p-4">
+        <!-- delete pop up -->
+        <div class="fixed z-10 inset-0 overflow-y-auto" v-if="popup">
+            <div class="flex items-center justify-center min-h-screen">
+                <div class="bg-white p-6 rounded-lg shadow-lg">
+                    <h2 class="text-xl font-bold mb-4">Are you sure you want to delete?</h2>
+                    <p class="mb-4">This action cannot be undone.</p>
+                    <div class="flex justify-end">
+                        <button class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mr-2"
+                            @click="deletemethod()">Delete</button>
+                        <button class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
+                            @click="this.popup = !this.popup">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- delete pop up -->
         <table class="table-auto shadow-2xl">
             <thead>
                 <tr class="border-2">
@@ -32,7 +48,7 @@ const router = useRouter()
                                 @click="editmethod(item)">Edit</button>
                             <button
                                 class="font-semibold py-2 w-full rounded-lg hover:bg-gray-500 hover:text-white active:scale-105"
-                                @click="deletemethod(item.productUrlId)">Delete</button>
+                                @click="deletepop(item.productUrlId)">Delete</button>
                         </div>
                     </td>
                 </tr>
@@ -78,7 +94,9 @@ const router = useRouter()
         </Transition>
         <nav class="flex justify-end items-center">
             <div>
-                <span class="mr-5 select-none font-semibold text-xl border-2 p-2 shadow-2xl">Page {{ this.pageno+1 }} of {{ this.count }}</span>
+                <span class="mr-5 select-none font-semibold text-xl border-2 p-2 shadow-2xl">Page {{ this.pageno + 1 }} of
+                    {{
+                        this.count }}</span>
             </div>
             <div>
                 <button @click="this.pageno--" :disabled="this.pageno < 1"
@@ -93,7 +111,7 @@ const router = useRouter()
 </template>
 <script>
 import { store } from '../store/store';
-import axiosClient from '../axios_config'
+import authservice from '../service/axios_config'
 import route from '../router/index'
 export default {
     data() {
@@ -104,41 +122,37 @@ export default {
             actionon: '',
             toast: false,
             message: '',
+            popup: false,
+            productUrlId: ''
         }
     },
     methods: {
         actionmethod(item) {
             this.actionon = this.actionon != '' ? '' : item._id
         },
-        deletemethod(item) {
-            fetch("http://localhost:2000/deleteproducts/" + item).then((response) => response.json()).then((data) => {
-                console.log(data);
-            })
+        async deletemethod() {
+            await authservice.deleteProducts(this.productUrlId)
             const data1 = {
                 no: this.pageno,
                 sortBy: 1,
                 min: 0,
                 max: 100000
             }
-
-            fetch("http://localhost:2000/getallproducts", {
-                method: "POST", // or 'PUT'
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(data1)
-            }).then((response) => response.json())
-                .then((data) => {
-                    this.data = data.data
-                    this.count = data.count / 10
-                })
-                .catch((error) => {
-                    console.error("error:", error);
-                });
-
+            try {
+                const op = await authservice.getAllProducts(data1)
+                this.data = op.data.data
+                this.count = Math.round(op.data.count/10)
+            } catch (error) {
+                route.push('/servererror')
+            }
+            this.popup = false
             this.message = "Product Deleted Succesfully"
             this.actionon = ''
             this.toast = true
+        },
+        deletepop(id) {
+            this.productUrlId = id
+            this.popup = !this.popup
         },
         editmethod(item) {
             store.details.productName = item.productName
@@ -151,19 +165,20 @@ export default {
         }
     },
     watch: {
-        pageno() {
+        async pageno() {
             const data1 = {
                 no: this.pageno,
                 sortBy: 1,
                 min: 0,
                 max: 100000
             }
-            axiosClient.post('/getallproducts', JSON.stringify(data1)).then((response) => {
-            this.data = response.data.data
-            this.count = Math.round(response.data.count)
-        }).catch(function (error) {
-            route.push('/servererror')
-        })
+            try {
+                const op = await authservice.getAllProducts(data1)
+                this.data = op.data.data
+                this.count = Math.round(op.data.count/10)
+            } catch (error) {
+                route.push('/servererror')
+            }
         },
         toast() {
             setTimeout(() => {
@@ -171,7 +186,7 @@ export default {
             }, 2000)
         }
     },
-    mounted() {
+    async mounted() {
         const data1 = {
             no: this.pageno,
             sortBy: 1,
@@ -179,12 +194,14 @@ export default {
             max: 100000
         }
         //axios
-        axiosClient.post('/getallproducts', JSON.stringify(data1)).then((response) => {
-            this.data = response.data.data
-            this.count = response.data.count
-        }).catch(function (error) {
+        try {
+            const op = await authservice.getAllProducts(data1)
+            this.data = op.data.data
+            this.count = Math.round(op.data.count/10)
+        } catch (error) {
             route.push('/servererror')
-        })
+            console.log(error);
+        }
     }
 }
 </script>
@@ -197,4 +214,5 @@ export default {
 .v-enter-from,
 .v-leave-to {
     opacity: 0;
-}</style>
+}
+</style>

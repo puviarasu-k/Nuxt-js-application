@@ -13,7 +13,8 @@ const router = createRouter({
     {
       path: '/details/:id',
       name: 'details',
-      component: () => import('../views/Details.vue')
+      component: () => import('../views/Details.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/register',
@@ -29,22 +30,26 @@ const router = createRouter({
     {
       path: '/products',
       name: 'products',
-      component: () => import('../views/Products.vue')
+      component: () => import('../views/Products.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/settings',
       name: 'settings',
-      component: () => import('../views/Settings.vue')
+      component: () => import('../views/Settings.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/buyer',
       name: 'buyer',
-      component: () => import('../views/Buyer.vue')
+      component: () => import('../views/Buyer.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/seller',
       name: 'seller',
-      component: () => import('../views/Seller.vue')
+      component: () => import('../views/Seller.vue'),
+      meta: { requiresAuth: true }
     },
     {
       path: '/:catchAll(.*)',
@@ -60,18 +65,21 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
-  // if (to.matched.some(record => record.meta.requiresAuth)) {
-  //   if (store.username != null) {
-  //     next()
-  //   }
-  //   else {
-  //     next('/')
-  //   }
-  // }
-  // else {
-  //   next()
-  // }
-  next()
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (document.cookie) {
+      next()
+    }
+    else {
+      next('/')
+    }
+  }
+  else if (to.fullPath == '/' && document.cookie) {
+    next('/products')
+  }
+  else {
+    next()
+  }
+
 })
 
 export default router
