@@ -1,15 +1,6 @@
 import http from '../http-common';
 
-class authService {
-    register(data) {
-        return http.post("/register", data);
-    }
-    login(data) {
-        return http.post("/login", data);
-    }
-    refresh(){
-        return http.get("/refresh")
-    }
+class productService {
     getAllProducts(data) {
         return http.post("/getallproducts", data)
     }
@@ -24,4 +15,4 @@ class authService {
     }
 }
 
-export default new authService();
+export default new productService();

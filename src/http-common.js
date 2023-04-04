@@ -1,29 +1,19 @@
 import axios from 'axios';
-import authservice from './service/axios_config'
-
+import route from './router/index'
 const axiosClient = axios.create({
     baseURL: "http://localhost:2000",
     headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json'
     },
-    // timeout: 8000
+    timeout: 8000
 });
-
 axiosClient.interceptors.request.use(function (config) {
     if (document.cookie) {
-        console.log("1");
         config.headers['Token'] = document.cookie
     }
-    else {
-        console.log("2");
-        const op = authservice.refresh();
-        async function refresh() {
-            const op =  await authservice.refresh();
-            console.log(op);
-        }
-        // console.log(refresh);
-        refresh();
+    else{
+        route.push('/')
     }
     return config;
 }, function (error) {

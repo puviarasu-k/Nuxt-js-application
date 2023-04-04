@@ -9,9 +9,9 @@ export const store = reactive({
   count:0,
   details: {
     productName: '',
-    productAmount: Number,
+    productAmount: '',
     category: '',
-    quantity: Number,
+    quantity: '',
     productUrlId: ''
   }
 })

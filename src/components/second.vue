@@ -36,20 +36,21 @@ import { store } from '../store/store'
                 <button type="submit"
                     class="rounded-lg active:scale-105 font-semibold ml-5 px-6 py-2 bg-orange-500 hover:bg-orange-600 ">Submit</button>
             </div>
+            <Transition>
+                <Toaster :message="this.message" v-show="this.toast" />
+            </Transition>
         </form>
     </div>
 </template>
 
 <script>
-import authservice from '../service/axios_config'
+import authservice from '../service/productservice'
+import Toaster from './toaster.vue';
 export default {
     data() {
         return {
-            productName: store.details.productName,
-            productAmount: store.details.productAmount,
-            category: store.details.category,
-            quantity: store.details.quantity,
-            productUrlId: store.details.productUrlId,
+            toast: false,
+            message: '',
             name: this.currentab.value
         }
     },
@@ -57,34 +58,64 @@ export default {
     unmounted() {
         this.$emit("tabname", "Add Product");
         store.details.productName = ''
-        store.details.productAmount = Number
+        store.details.productAmount = ''
         store.details.category = ''
-        store.details.quantity = Number
+        store.details.quantity = ''
         store.details.productUrlId = ''
     },
     inject: ['currentab'],
     methods: {
         async submit() {
-            if (this.currentab == "Add Product") {
+            console.log(this.currentab);
+            if (this.currentab.value == "Add Product") {
                 const data = {
-                    productName: this.productName,
-                    price: this.productAmount,
-                    category: this.category,
-                    quantity: this.quantity,
+                    productName: store.details.productName,
+                    price: store.details.productAmount,
+                    category: store.details.category,
+                    quantity: store.details.quantity,
+                    productUrlId: store.details.productName
                 }
                 await authservice.addProduct(data)
+                store.details.productName = ''
+                store.details.productAmount = ''
+                store.details.category = ''
+                store.details.quantity = ''
+                store.details.productUrlId = ''
+                this.message = "Product Added Succesfully"
+                this.toast = true
             }
             else {
                 const data = {
-                    productName: this.productName,
-                    productAmount: this.productAmount,
-                    category: this.category,
-                    quantity: this.quantity,
-                    productUrlId: this.productUrlId
+                    productName: store.details.productName,
+                    productAmount: store.details.productAmount,
+                    category: store.details.category,
+                    quantity: store.details.quantity,
+                    productUrlId: store.details.productUrlId
                 }
                 await authservice.editProduct(data)
+                this.message = "Product Edited Succesfully"
+                this.toast = true
             }
         }
-    }
+    },
+    watch: {
+        toast() {
+            setTimeout(() => {
+                this.toast = false
+            }, 3000)
+        }
+    },
 }
 </script>
+
+<style scoped>
+.v-enter-active,
+.v-leave-active {
+    transition: opacity 1s ease;
+}
+
+.v-enter-from,
+.v-leave-to {
+    opacity: 0;
+}
+</style>

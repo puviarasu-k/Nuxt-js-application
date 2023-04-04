@@ -22,7 +22,7 @@ import router from '../router/index';
 </template>
 
 <script>
-import authservice from '../service/axios_config'
+import authservice from '../service/authservice'
 import Input from '../components/input.vue'
 export default {
   data() {
