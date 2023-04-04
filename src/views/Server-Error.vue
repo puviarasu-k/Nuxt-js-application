@@ -12,17 +12,25 @@ let route = window.history.state.back;
 <script>
 import router from '../router/index'
 export default {
-    // mounted() {
-    //     console.log(this.$router.options.history.state.back);
-    //     // window.BeforeUnloadEvent(router.push(this.$router.options.history.state.back))
-    //     let close = () => {
-    //         console.log("scsfvg");
-    //         router.push(this.$router.options.history.state.back)
-    //     }
-    //     window.onbeforeunload = close()
-    //     // addEventListener("beforeunload", (event) => { router.push(this.$router.options.history.state.back) });
-    //     // onbeforeunload = (event) => { router.push(this.$router.options.history.state.back) };
+    unmounted() {
+        // console.log(this.$router.options.history.state.back);
+        window.BeforeUnloadEvent(router.push(this.$router.options.history.state.back))
+        // let close = () => {
+        //     console.log("scsfvg");
+        //     router.push(this.$router.options.history.state.back)
+        // }
+        // window.onbeforeunload = close()
+        // addEventListener("beforeunload", (event) => { router.push(this.$router.options.history.state.back) });
+        // onbeforeunload = (event) => { router.push(this.$router.options.history.state.back) };
 
-    // },
+    },
+    // created() {
+
+    //     window.addEventListener('beforeunload', function (event) {
+    //         // event.returnValue = "summa"
+    //         window.history.back()
+    //     })
+    //     // window.history.back()
+    // }
 }
 </script>

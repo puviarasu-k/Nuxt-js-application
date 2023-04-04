@@ -1,20 +1,39 @@
 <script setup>
 import { useRouter } from 'vue-router'
+import { ref } from 'vue';
+import { store } from '../store/store';
+// let data = ref([]);
+// let count2 
 const router = useRouter()
+const data1 = {
+    no: 0,
+    sortBy: 1,
+    min: 0,
+    max: 100000
+}
+//axios
+try {
+    const op = await authservice.getAllProducts(data1)
+    store.data = op.data.data
+    store.count = Math.round(op.data.count / 10)
+} catch (error) {
+    route.push('/servererror')
+    console.log(error);
+}
 </script>
 <template>
     <main class="flex w-full h-full` flex-col gap-4 p-4">
         <!-- delete pop up -->
-        <div class="fixed z-10 inset-0 overflow-y-auto" v-if="popup">
+        <div class="fixed z-10 inset-0 overflow-y-auto backdrop-blur-sm" v-if="popup">
             <div class="flex items-center justify-center min-h-screen">
-                <div class="bg-white p-6 rounded-lg shadow-lg">
+                <div class="bg-white p-6 rounded-lg shadow-black shadow-2xl ring-2 ring-green-700">
                     <h2 class="text-xl font-bold mb-4">Are you sure you want to delete?</h2>
                     <p class="mb-4">This action cannot be undone.</p>
                     <div class="flex justify-end">
-                        <button class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded mr-2"
-                            @click="deletemethod()">Delete</button>
-                        <button class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded"
+                        <button class="bg-gray-500 hover:bg-gray-600 text-white font-bold py-2 px-4 rounded mr-2"
                             @click="this.popup = !this.popup">Cancel</button>
+                        <button class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-4 rounded"
+                            @click="deletemethod()">Delete</button>
                     </div>
                 </div>
             </div>
@@ -31,7 +50,7 @@ const router = useRouter()
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in data" class="border-2 hover:bg-[#d8e7f3]">
+                <tr v-for="item in store.data" class="border-2 hover:bg-[#d8e7f3]">
                     <td class="p-2 border-2 w-56">{{ item.categoryName }}</td>
                     <td class="p-2 border-2 w-72 text-ellipsis overflow-hidden">{{ item.productName }}</td>
                     <td class="p-2 border-2 w-10">{{ item.productVariant[0].price }}</td>
@@ -96,7 +115,7 @@ const router = useRouter()
             <div>
                 <span class="mr-5 select-none font-semibold text-xl border-2 p-2 shadow-2xl">Page {{ this.pageno + 1 }} of
                     {{
-                        this.count }}</span>
+                        store.count }}</span>
             </div>
             <div>
                 <button @click="this.pageno--" :disabled="this.pageno < 1"
@@ -116,14 +135,14 @@ import route from '../router/index'
 export default {
     data() {
         return {
-            data: [],
+            // data: [],
             pageno: 0,
-            count: 0,
+            // count: 0,
             actionon: '',
             toast: false,
             message: '',
             popup: false,
-            productUrlId: ''
+            productUrlId: '',
         }
     },
     methods: {
@@ -140,8 +159,8 @@ export default {
             }
             try {
                 const op = await authservice.getAllProducts(data1)
-                this.data = op.data.data
-                this.count = Math.round(op.data.count/10)
+                store.data = op.data.data
+                store.count = Math.round(op.data.count / 10)
             } catch (error) {
                 route.push('/servererror')
             }
@@ -151,6 +170,7 @@ export default {
             this.toast = true
         },
         deletepop(id) {
+            this.actionon = ''
             this.productUrlId = id
             this.popup = !this.popup
         },
@@ -174,8 +194,8 @@ export default {
             }
             try {
                 const op = await authservice.getAllProducts(data1)
-                this.data = op.data.data
-                this.count = Math.round(op.data.count/10)
+                store.data = op.data.data
+                store.count = Math.round(op.data.count / 10)
             } catch (error) {
                 route.push('/servererror')
             }
@@ -183,26 +203,27 @@ export default {
         toast() {
             setTimeout(() => {
                 this.toast = false
-            }, 2000)
+            }, 3000)
         }
     },
-    async mounted() {
-        const data1 = {
-            no: this.pageno,
-            sortBy: 1,
-            min: 0,
-            max: 100000
-        }
-        //axios
-        try {
-            const op = await authservice.getAllProducts(data1)
-            this.data = op.data.data
-            this.count = Math.round(op.data.count/10)
-        } catch (error) {
-            route.push('/servererror')
-            console.log(error);
-        }
-    }
+    // async mounted() {
+    //     console.log(this.summa);
+    //     const data1 = {
+    //         no: this.pageno,
+    //         sortBy: 1,
+    //         min: 0,
+    //         max: 100000
+    //     }
+    //     //axios
+    //     try {
+    //         const op = await authservice.getAllProducts(data1)
+    //         this.data = op.data.data
+    //         this.count = Math.round(op.data.count / 10)
+    //     } catch (error) {
+    //         route.push('/servererror')
+    //         console.log(error);
+    //     }
+    // }
 }
 </script>
 <style scoped>

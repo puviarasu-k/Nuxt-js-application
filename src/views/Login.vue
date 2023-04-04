@@ -4,17 +4,13 @@ import { store } from '../store/store'
 </script>
 <template>
   <main>
-    <form class="flex flex-col justify-around items-center w-1/3 h-[400px] mt-52 m-auto" @submit.prevent="submitclick">
-      <h1 class="px-8 text-lg bg-gradient-to-r from-orange-400 to-red-400 font-semibold py-2 rounded-full h-fit">Welcome
+  <form class="shadow-orange-400 shadow-lg ring-2 rounded-lg ring-orange-500 flex flex-col justify-around items-center w-1/3 h-[400px] mt-52 m-auto" @submit.prevent="submitclick">
+    <h1 class="px-8 text-lg bg-gradient-to-r from-orange-400 to-red-400 font-semibold py-2 rounded-full h-fit">Welcome
       </h1>
-      <input placeholder="Enter Username"
-        class="w-96 h-10 pl-2 border-solid outline-orange-500 border-b-[1px] border-black"
-        v-model="username" required type="text">
-      <input placeholder="Enter Password"
-        class="w-96 h-10 pl-2 border-solid outline-orange-500 border-b-[1px] border-black"
-        v-model="password" required type="Password">
+      <Input v-model="username" placeholder="Enter username" />
+      <Input v-model="password" placeholder="Enter Password" type="password" />
       <section class="flex items-center ">
-        <input required type="checkbox">
+        <input required type="checkbox" class="accent-orange-500">
         <span class="text-lg">&nbsp;I agree to the terms and condition</span>
       </section>
       <span v-if="errormsg != ''" class="font-semibold text-red-600">{{ this.errormsg }}</span>
@@ -27,6 +23,7 @@ import { store } from '../store/store'
 
 <script>
 import authservice from '../service/axios_config'
+import Input from '../components/input.vue'
 export default {
   data() {
     return {

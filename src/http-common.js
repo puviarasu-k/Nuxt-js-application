@@ -1,4 +1,5 @@
 import axios from 'axios';
+import authservice from './service/axios_config'
 
 const axiosClient = axios.create({
     baseURL: "http://localhost:2000",
@@ -6,13 +7,24 @@ const axiosClient = axios.create({
         'Accept': 'application/json',
         'Content-Type': 'application/json'
     },
-    timeout: 8000
+    // timeout: 8000
 });
 
 axiosClient.interceptors.request.use(function (config) {
-    // Do something before request is sent
-    config.headers['Token'] = document.cookie;
-    console.log("req");
+    if (document.cookie) {
+        console.log("1");
+        config.headers['Token'] = document.cookie
+    }
+    else {
+        console.log("2");
+        const op = authservice.refresh();
+        async function refresh() {
+            const op =  await authservice.refresh();
+            console.log(op);
+        }
+        // console.log(refresh);
+        refresh();
+    }
     return config;
 }, function (error) {
     // Do something with request error
@@ -22,7 +34,6 @@ axiosClient.interceptors.request.use(function (config) {
 
 axiosClient.interceptors.response.use(
     function (response) {
-        console.log("res");
         // Do something after response come here
         return response;
     },

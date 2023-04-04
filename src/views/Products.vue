@@ -19,10 +19,17 @@ import { store } from '../store/store'
                         :class="`${this.which ? `text-green-600` : ``}`" @click="this.which = true">{{ this.currentab
                         }}</button>
                 </div>
-                <Transition name="first">
-                    <First @tab="which = $event" @tabname="currentab = $event" @details="summa = $event"
-                        v-if="!this.which" />
-                </Transition>
+                <Suspense>
+                    <template #default>
+                        <Transition name="first">
+                        <First @tab="which = $event" @tabname="currentab = $event" @details="summa = $event"
+                            v-if="!this.which" />
+                    </Transition>
+                    </template>
+                    <template #fallback>
+                        <img src="https://static.vecteezy.com/system/resources/previews/016/774/561/non_2x/loading-icon-loading-progress-icon-on-transparent-background-free-png.png" class="w-96 mx-auto animate-spin h-64 object-contain" alt="">
+                    </template>
+                </Suspense>
                 <Transition name="second">
                     <Second v-if="this.which" @tabname="currentab = $event" />
                 </Transition>

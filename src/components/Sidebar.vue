@@ -1,6 +1,5 @@
 <script setup>
 import { useRouter } from 'vue-router'
-
 const router = useRouter()
 const dta = router.currentRoute.value.name
 </script>
@@ -73,7 +72,7 @@ const dta = router.currentRoute.value.name
                 <RouterLink :class="`${dta == 'settings' ? `text-orange-500` : ``}`"
                     class="text-white text-xl group-hover:text-orange-300" to="/settings">Settings</RouterLink>
             </section>
-            <details class="text-white group text-lg cursor-pointer select-none w-full flex flex-col select-none">
+            <details class="text-white group text-lg cursor-pointer w-full flex flex-col select-none">
                 <summary class=" flex items-center justify-between text-xl">
                     <h1 class="flex items-center hover:text-orange-300"><svg class="w-10" width="20px" height="20px" viewBox="0 0 24 24"
                             fill="none" xmlns="http://www.w3.org/2000/svg" stroke="#000000">
