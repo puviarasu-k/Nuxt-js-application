@@ -7,10 +7,8 @@ let count = ref(0)
 
 const route = useRoute();
 const { id } = route.params
-console.log(id);
 fetch(`http://localhost:2000/details/${id}`).then((response) => response.json())
     .then((data) => {
-        // products = data
         store.details = data
         store.image = data.productImages[0]
     })

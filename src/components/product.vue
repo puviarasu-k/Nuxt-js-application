@@ -10,14 +10,12 @@ const data1 = {
     min: 0,
     max: 100000
 }
-//axios
 try {
     const op = await authservice.getAllProducts(data1)
     store.data = op.data.data
     store.count = Math.round(op.data.count / 10)
 } catch (error) {
     route.push('/servererror')
-    console.log(error);
 }
 </script>
 <template>

@@ -66,7 +66,6 @@ export default {
     inject: ['currentab'],
     methods: {
         async submit() {
-            console.log(this.currentab);
             if (this.currentab.value == "Add Product") {
                 const data = {
                     productName: store.details.productName,
@@ -93,6 +92,11 @@ export default {
                     productUrlId: store.details.productUrlId
                 }
                 await authservice.editProduct(data)
+                store.details.productName = ''
+                store.details.productAmount = ''
+                store.details.category = ''
+                store.details.quantity = ''
+                store.details.productUrlId = ''
                 this.message = "Product Edited Succesfully"
                 this.toast = true
             }

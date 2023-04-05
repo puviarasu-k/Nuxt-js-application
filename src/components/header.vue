@@ -46,8 +46,9 @@ const name = localStorage.getItem("username")
                                 </g>
                             </svg>
                             Profile</button>
-                        <button class="flex justify-center items-center text-xl mt-5 hover:scale-105 gap-2"><svg
-                                fill="#ffffff" width="20px" height="20px" viewBox="0 0 32 32" id="Outlined"
+                        <button @click="logout"
+                            class="flex justify-center items-center text-xl mt-5 hover:scale-105 gap-2"><svg fill="#ffffff"
+                                width="20px" height="20px" viewBox="0 0 32 32" id="Outlined"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                                 <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
