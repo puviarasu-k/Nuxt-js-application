@@ -22,12 +22,13 @@ import { store } from '../store/store'
                 <Suspense>
                     <template #default>
                         <Transition name="first">
-                        <First @tab="which = $event" @tabname="currentab = $event" @details="summa = $event"
-                            v-if="!this.which" />
-                    </Transition>
+                            <First @tab="which = $event" @tabname="currentab = $event" @details="summa = $event"
+                                v-if="!this.which" />
+                        </Transition>
                     </template>
                     <template #fallback>
-                        <img src="https://static.vecteezy.com/system/resources/previews/016/774/561/non_2x/loading-icon-loading-progress-icon-on-transparent-background-free-png.png" class="w-96 mx-auto animate-spin h-64 object-contain" alt="">
+                        <img src="https://static.vecteezy.com/system/resources/previews/016/774/561/non_2x/loading-icon-loading-progress-icon-on-transparent-background-free-png.png"
+                            class="w-96 mx-auto animate-spin h-64 object-contain" alt="">
                     </template>
                 </Suspense>
                 <Transition name="second">
@@ -50,7 +51,6 @@ export default {
     },
     methods: {},
     provide() {
-        // use function syntax so that we can access `this`
         return {
             currentab: computed(() => this.currentab)
         }

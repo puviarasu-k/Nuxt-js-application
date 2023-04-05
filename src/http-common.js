@@ -8,12 +8,10 @@ const axiosClient = axios.create({
     },
     timeout: 8000
 });
+
 axiosClient.interceptors.request.use(function (config) {
     if (document.cookie) {
         config.headers['Token'] = document.cookie
-    }
-    else{
-        route.push('/')
     }
     return config;
 }, function (error) {
