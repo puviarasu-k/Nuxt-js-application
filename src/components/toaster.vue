@@ -15,7 +15,7 @@
                             <p class="text-sm leading-5 font-medium text-green-800">
                                 Success!
                             </p>
-                            <p class="mt-1 text-lg font-semibold leading-5 text-green-700">
+                            <p v-bind="$attrs" class="mt-1 text-lg font-semibold leading-5 text-green-700">
                                 {{ message }}
                             </p>
                         </div>

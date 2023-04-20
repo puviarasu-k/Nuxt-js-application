@@ -7,6 +7,9 @@ class authService {
     login(data) {
         return http.post("/login", data);
     }
+    refresh() {
+        return http.post("/refresh")
+    }
 }
 
 export default new authService();

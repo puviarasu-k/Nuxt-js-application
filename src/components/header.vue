@@ -4,7 +4,7 @@ import { store } from '../store/store'
 const name = localStorage.getItem("username")
 </script>
 <template>
-    <header class="w-full h-16 bg-slate-700 flex justify-between items-center">
+    <header class="w-full h-16 bg-slate-700 flex justify-between items-center lg:static sticky top-0 z-10">
         <section class="flex items-center">
             <svg @click="store.open = !store.open" :class="`stroke-white hover:scale-110 cursor-pointer `" width="45px"
                 height="45px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">

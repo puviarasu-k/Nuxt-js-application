@@ -1,6 +1,5 @@
 <script setup>
 import { useRouter } from 'vue-router'
-import { ref } from 'vue';
 import { store } from '../store/store';
 
 const router = useRouter()
@@ -19,7 +18,7 @@ try {
 }
 </script>
 <template>
-    <main class="flex w-full h-full` flex-col gap-4 p-4">
+    <main class="flex w-full h-full flex-col gap-4 lg:p-4 p-1">
         <!-- delete pop up -->
         <div class="fixed z-10 inset-0 overflow-y-auto backdrop-blur-sm" v-if="popup">
             <div class="flex items-center justify-center min-h-screen">
@@ -39,7 +38,7 @@ try {
         <table class="table-auto shadow-2xl">
             <thead>
                 <tr class="border-2">
-                    <th class="p-2 border-2">Category</th>
+                    <th class="p-2 border-2 ">Category</th>
                     <th class="p-2 border-2">Product Name</th>
                     <th class="p-2 border-2">Price</th>
                     <th class="p-2 border-2">Quantity</th>
@@ -48,13 +47,13 @@ try {
             </thead>
             <tbody>
                 <tr v-for="item in store.data" class="border-2 hover:bg-[#d8e7f3]">
-                    <td class="p-2 border-2 w-56">{{ item.categoryName }}</td>
-                    <td class="p-2 border-2 w-72 text-ellipsis overflow-hidden">{{ item.productName }}</td>
-                    <td class="p-2 border-2 w-10">{{ item.productVariant[0].price }}</td>
-                    <td class="p-2 border-2 w-10">{{ item.totalQuantity }}</td>
-                    <td class="p-2 border-2 w-20 relative">
+                    <td class="p-2 border-2 ">{{ item.categoryName }}</td>
+                    <td class="p-2 border-2 text-ellipsis overflow-hidden">{{ item.productName }}</td>
+                    <td class="p-2 border-2">{{ item.productVariant[0].price }}</td>
+                    <td class="p-2 border-2">{{ item.totalQuantity }}</td>
+                    <td class="p-2 border-2 relative">
                         <button @click="actionmethod(item)" class="mx-auto block ">&#9776;</button>
-                        <div class="absolute w-28 right-16 h-32 border-2 bg-gray-200 rounded-lg z-10 shadow-2xl border-gray-300"
+                        <div class="absolute w-28 lg:right-16 right-8 h-32 border-2 bg-gray-200 rounded-lg z-10 shadow-2xl border-gray-300"
                             :class="`${this.actionon == item._id ? `block` : `hidden`}`">
                             <button
                                 class="font-semibold py-2 w-full rounded-lg hover:bg-gray-500 hover:text-white active:scale-105"

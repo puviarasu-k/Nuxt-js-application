@@ -4,7 +4,7 @@ const router = useRouter()
 const dta = router.currentRoute.value.name
 </script>
 <template>
-    <main class="shadow-2xl bg-gradient-to-b from-slate-700 to-slate-500 relative top-0 h-screen w-48">
+    <main class="fixed shadow-2xl bg-gradient-to-b from-slate-700 to-slate-500 lg:relative z-10 h-screen w-48">
         <h2 class="text-3xl font-serif text-orange-400 pt-3  text-center">Test</h2>
         <hr class="my-4">
         <section class="flex flex-col items-center gap-5">

@@ -3,39 +3,39 @@ import { store } from '../store/store'
 </script>
 <template>
     <div id="favDialog" class="w-full h-[677px] flex justify-center">
-        <form method="dialog" class="flex flex-col w-1/2 items-center justify-around" @submit="submit">
+        <form method="dialog" class="flex flex-col xl:w-1/2 w-full  items-center justify-around" @submit="submit">
             <h1 class=" px-6 font-semibold text-4xl select-none">
                 {{ name }}</h1>
-            <div class="flex justify-between w-full items-center">
-                <label class="text-xl font-semibold">Product Name&emsp;&emsp;&emsp;&emsp;: </label>
+            <div class="flex xl:justify-between justify-evenly w-full items-center">
+                <label class="text-xl font-semibold w-40">Product Name</label>
+                <span class="text-xl font-semibold">:</span>
                 <input type="text" required v-model="store.details.productName"
-                    class="pl-2 w-96 h-10 border-solid outline-orange-500 border-[1px] border-orange-500 rounded-md"
+                    class="pl-2 xl:w-96 h-10 border-solid outline-orange-500 border-[1px] border-orange-500 rounded-md"
                     placeholder="Enter Product Name">
             </div>
-            <div class="flex justify-between w-full items-center">
-                <label class="text-xl font-semibold">Product Category&emsp;&emsp;&nbsp;&nbsp;:</label>
+            <div class="flex xl:justify-between justify-evenly w-full items-center">
+                <label class="text-xl font-semibold w-40">Product Category</label>
+                <span class="text-xl font-semibold">:</span>
                 <input type="text" required v-model="store.details.category"
-                    class="pl-2 w-96 h-10 border-solid outline-orange-500 border-[1px] border-orange-500 rounded-md"
+                    class="pl-2 xl:w-96 h-10 border-solid outline-orange-500 border-[1px] border-orange-500 rounded-md"
                     placeholder="Enter Product Category">
             </div>
-            <div class="flex justify-between w-full items-center">
-                <label class="text-xl font-semibold">Product Amount&emsp;&emsp;&ensp;&ensp;:</label>
+            <div class="flex xl:justify-between justify-evenly w-full items-center">
+                <label class="text-xl font-semibold w-40">Product Amount</label>
+                <span class="text-xl font-semibold">:</span>
                 <input type="number" required v-model="store.details.productAmount"
-                    class="pl-2 w-96 h-10 border-solid outline-orange-500 border-[1px] border-orange-500 rounded-md"
+                    class="pl-2 xl:w-96 h-10 border-solid outline-orange-500 border-[1px] border-orange-500 rounded-md"
                     placeholder="Enter Product Amount">
             </div>
-            <div class="flex justify-between w-full items-center">
-                <label class="text-xl font-semibold">Product Quantity&emsp;&emsp;&emsp;:</label>
+            <div class="flex xl:justify-between justify-evenly w-full items-center">
+                <label class="text-xl font-semibold w-40">Product Quantity</label>
+                <span class="text-xl font-semibold">:</span>
                 <input type="number" required v-model="store.details.quantity"
-                    class="pl-2 w-96 h-10 border-solid outline-orange-500 border-[1px] border-orange-500 rounded-md"
+                    class="pl-2 xl:w-96 h-10 border-solid outline-orange-500 border-[1px] border-orange-500 rounded-md"
                     placeholder="Enter Product Quantity">
             </div>
-            <div>
-                <button value="cancel"
-                    class="rounded-lg active:scale-105 font-semibold ml-5 px-6 py-2 bg-orange-500 hover:bg-orange-600">Cancel</button>
                 <button type="submit"
-                    class="rounded-lg active:scale-105 font-semibold ml-5 px-6 py-2 bg-orange-500 hover:bg-orange-600 ">Submit</button>
-            </div>
+                    class="rounded-lg active:scale-105 font-semibold px-6 py-2 bg-orange-500 hover:bg-orange-600 ">Submit</button>
             <Transition>
                 <Toaster :message="this.message" v-show="this.toast" />
             </Transition>
