@@ -53,7 +53,7 @@ export default {
                             type="button">Change Password</button>
                         <button class="dorpdownbutton"
                             style="width: 100%;border: none;padding-block: 10px;font-size: medium;background-color: transparent;cursor: pointer;"
-                            type="button">Log Out</button>
+                            type="button"><NuxtLink to="/" class="dorpdownbutton" style="color: black;text-decoration: none;display: block;width: 100%;">Log Out</NuxtLink></button>
                     </section>
                 </div>
             </header>
@@ -73,7 +73,7 @@ export default {
 
 .dorpdownbutton:hover {
     background-color: #4385f5 !important;
-    color: white;
+    color: white !important;
 }
 
 .profile-dropdown {
