@@ -3,11 +3,9 @@
         <h2 style="text-align: center;padding-top: 7px;">Sidebar</h2>
         <hr style="width: 100%;" />
         <section style="display: flex;flex-direction: column;gap: 5px;">
-            <NuxtLink to="/posts" active-class="summa" class="sidebar-button">Posts</NuxtLink>
-            <NuxtLink to="/users" active-class="summa" class="sidebar-button">Users</NuxtLink>
-            <NuxtLink to="/contacts" active-class="summa" class="sidebar-button">Contacts</NuxtLink>
-            <NuxtLink to="/about-us" active-class="summa" class="sidebar-button">About&nbsp;Us</NuxtLink>
-            <NuxtLink to="/settings" active-class="summa" class="sidebar-button">Settings</NuxtLink>
+            <NuxtLink to="/home" active-class="summa" class="sidebar-button">Home</NuxtLink>
+            <NuxtLink to="/static" active-class="summa" class="sidebar-button">Static</NuxtLink>
+            <NuxtLink to="/report" active-class="summa" class="sidebar-button">Report</NuxtLink>
         </section>
     </div>
     <slot />

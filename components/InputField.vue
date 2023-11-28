@@ -1,10 +1,10 @@
 <template>
-    <input class="input-field">
+    <input class="input-field" autofocus autocomplete="off">
 </template>
 
 <style>
 .input-field {
-    padding: 10px;
     width: 300px;
+    padding-left: 10px;
 }
 </style>

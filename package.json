@@ -3,7 +3,7 @@
   "private": true,
   "main": "main.js",
   "scripts": {
-    "start": "electron .",
+    "start": "nuxt start -p 4000",
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",

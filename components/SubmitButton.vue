@@ -10,18 +10,20 @@ export default {
 
 <style>
 button[type='submit'] {
-    padding-inline: 20px;
+    padding-inline: 30px;
     padding-block: 10px;
     border: none;
     cursor: pointer;
-    background-color: #427D9D;
+    border-radius: 10px;
+    font-size: larger;
+    background-image: linear-gradient(to right, #003a62, #003a62 50%, white 50%, white);
     color: white;
-    font-size: medium;
-    font-weight: 600;
+    background-size: 200% 100%;
     transition: all 0.2s ease-in-out;
 }
 
 button[type='submit']:hover {
-    background-color: #164863;
+    background-position: -100% 0;
+    color: black;
 }
 </style>
