@@ -5,6 +5,5 @@
 <style>
 .input-field {
     width: 300px;
-    padding-left: 10px;
 }
 </style>
