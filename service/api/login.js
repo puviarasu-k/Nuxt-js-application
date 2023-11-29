@@ -1,6 +1,6 @@
 import { useFetch } from "nuxt/app"
 
-export default async function login(body:any) {
+export default async function login(body) {
         const { data: data } = await useFetch('httP://localhost:9600/api/login', {
             method: 'POST',
             credentials: 'include',

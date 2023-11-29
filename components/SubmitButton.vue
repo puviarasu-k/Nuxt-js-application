@@ -8,7 +8,7 @@ export default {
     <button type="submit">{{ value }}</button>
 </template>
 
-<style>
+<style scoped>
 button[type='submit'] {
     padding-inline: 30px;
     padding-block: 10px;

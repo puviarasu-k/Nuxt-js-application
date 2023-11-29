@@ -9,7 +9,7 @@
                         <div class="machine" v-for="(machine, index) in machines" :key="index">
                             <div class="machine-dt">
                                 <h4 class="sub-title">Flywheel-Core 3</h4>
-                                <img class="img-machine" src="DataCT.jpeg">
+                                <img class="img-machine" src="~/assets/image/DataCT.jpeg">
                             </div>
                             <div class="machine-lt">
                                 <h4 class="sub-title">ENGINE NO -</h4>
@@ -65,7 +65,7 @@
                         <div class="machine" v-for="(machine, index) in machines" :key="index">
                             <div class="machine-dt">
                                 <h4 class="sub-title">Clutch pulley-SC</h4>
-                                <img class="img-machine" src="DataCT.jpeg">
+                                <img class="img-machine" src="~/assets/image/DataCT.jpeg">
                             </div>
                             <div class="machine-lt">
                                 <h4 class="sub-title">ENGINE NO -</h4>
@@ -126,7 +126,7 @@
                         <div class="machine" v-for="(machine, index) in machines" :key="index">
                             <div class="machine-dt">
                                 <h4 class="sub-title">Main Line</h4>
-                                <img class="img-machine" src="DataCT.jpeg">
+                                <img class="img-machine" src="~/assets/image/DataCT.jpeg">
                             </div>
                             <div class="machine-lt">
                                 <h4 class="sub-title">ENGINE NO -</h4>
@@ -182,7 +182,7 @@
                         <div class="machine" v-for="(machine, index) in machines" :key="index">
                             <div class="machine-dt">
                                 <h4 class="sub-title">Main Line</h4>
-                                <img class="img-machine" src="DataCT.jpeg">
+                                <img class="img-machine" src="~/assets/image/DataCT.jpeg">
                             </div>
                             <div class="machine-lt">
                                 <h4 class="sub-title">ENGINE NO -</h4>
@@ -406,42 +406,4 @@ p {
     gap: 20px;
 }
 
-.heading {
-    margin: 0;
-    background-color: #ff3306;
-    position: absolute;
-    top: 0;
-    width: 100%;
-    text-align: center;
-    color: white;
-}
-
-.home-parent {
-    width: 95%;
-    height: 90%;
-    position: relative;
-    border: 2px solid #dddddd;
-    display: grid;
-    margin: 0 auto;
-    place-items: center;
-    grid-template-columns: repeat(2, 1fr);
-}
-
-.left-side {
-    height: 90%;
-    width: 95%;
-    display: flex;
-    align-items: center;
-    position: relative;
-    border: 1px solid #dddddd;
-}
-
-.right-side {
-    height: 90%;
-    width: 95%;
-    display: flex;
-    align-items: center;
-    position: relative;
-    border: 1px solid #dddddd;
-}
 </style>
