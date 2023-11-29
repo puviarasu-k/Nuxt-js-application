@@ -5,18 +5,18 @@
             <h2 style="color:rgb(0, 58, 98);margin: 0;text-decoration: underline;">REPORT GENERATION</h2>
             <section style="place-self: start;gap: 20px;display: grid;">
                 <div class="flex" style="gap: 5px;">
-                    <input type="radio" name="RG" id="EINB" required>
+                    <input type="radio" v-model="selectFilt" value="EINB" name="RG" id="EINB" required>
                     <label for="EINB" style="font-size: larger;font-weight: 600;opacity: 0.8;">ENGINE IDENTIFICATION NUMBER
                         BASED</label>
                 </div>
                 <div style="width: 100%;padding-left: 75%;">
                     <label style="font-size: large;padding-right: 10px;" for="EIN">EIN:</label>
-                    <input type="text" id="EIN" placeholder="Search the EIN">
+                    <input type="text" v-model="searchValue" id="EIN" placeholder="Search the EIN">
                 </div>
             </section>
             <section style="place-self: start;display: grid;gap: 20px;">
                 <div class="flex" style="gap: 5px;">
-                    <input type="radio" name="RG" id="DB">
+                    <input type="radio" v-model="selectFilt" value="DB" name="RG" id="DB">
                     <label for="DB" style="font-size: larger;font-weight: 600;opacity: 0.8;">DATE BASED</label>
                 </div>
                 <div style="gap: 10px;width: 100%;padding-left: 25%;" class="flex">
@@ -26,11 +26,59 @@
                     <input type="date" name="toDate" id="toDate">
                 </div>
             </section>
-            <button type="submit">Get Report</button>
+            <button type="submit" @click.prevent="reportDownload()">Get Report</button>
         </form>
     </div>
 </template>
+<script>
+import { saveAs } from 'file-saver';
+export default {
+    data() {
+        return {
+            selectFilt: "EINB",
+            searchValue: "",
+            startDate: "",
+            endDate: ""
+        }
+    },
+    methods: {
+        async reportDownload() {
+            try {
+                if(this.selectFilt === "EINB" && this.searchValue ===""){
+                    return;
+                }
+                const request =
+                    this.selectFilt === "EINB"
+                        ? { filterType: "EIN", searchValue: this.searchValue }
+                        : { filterType: "DATE", startDate: this.startDate, endDate: this.endDate };
 
+                const response = await useFetch('http://localhost:9600/api/reportDownload', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(request)
+                });
+
+                if (response.data?.value?.statusCode === 200) {
+                    if (response.data.value.tabledata) {
+                        const uint8Array = new Uint8Array(response.data.value.tabledata.data);
+                        const blobs = new Blob([uint8Array], {
+                            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                        });
+                        saveAs(blobs, 'report.xlsx');
+                    }
+                } else {
+                    console.error("Error", response.data?.value);
+                }
+            } catch (error) {
+                console.error("Error", error);
+            }
+        }
+    }
+}
+</script>
 <style scoped>
 input[type='text'] {
     width: 300px;

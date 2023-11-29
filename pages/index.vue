@@ -9,7 +9,8 @@
             </div>
             <div class="left-side">
                 <section style="display: grid;gap: 20px;">
-                    <h1 style="font-size: 50px;color: white;place-self: center;margin-top: 0;margin-bottom: 10px;">DatACT</h1>
+                    <h1 style="font-size: 50px;color: white;place-self: center;margin-top: 0;margin-bottom: 10px;">Dat<span
+                            style="color:#003A62">ACT</span></h1>
                     <h2 style="color: white;place-self: center;margin: 0;">SIGN IN</h2>
                     <div class="input-group">
                         <i><svg fill="#000000" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
@@ -105,7 +106,7 @@ export default {
         async submit(event) {
             event.preventDefault();
             if (username.value !== '' && password.value !== '') {
-                const { data: data } = await useFetch('httP://localhost:9001/api/login', {
+                const { data: data } = await useFetch('httP://localhost:9600/api/login', {
                     method: 'POST',
                     credentials: 'include',
                     headers: {
