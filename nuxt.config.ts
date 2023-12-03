@@ -4,5 +4,13 @@ export default defineNuxtConfig({
   devServer: {
     port: 9601
   },
-  pages: true
+  pages: true,
+  components: true,
+  app: {
+    head: {
+      link: [
+        { rel: 'icon', type: 'image/png', sizes: '32x32', href: '/DataCT.jpeg' }
+      ],
+    }
+  }
 })

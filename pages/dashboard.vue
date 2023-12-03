@@ -8,7 +8,7 @@
                     <div class="machine bdr-rt bdr-tp" v-for="(machine, index) in slicedDcMachine(0, 4)" :key="index">
                         <div class="machine-dt">
                             <h4 class="sub-title">Flywheel-Core 3</h4>
-                            <img class="img-machine" src="~/assets/image/machine.png">
+                            <img class="img-machine" src="~/assets/image/dc_machine.png">
                         </div>
                         <div class="machine-lt nmachine-lt">
                             <h4 class="sub-title">ENGINE NO - {{ machine.Engine_Number }}</h4>
@@ -24,12 +24,12 @@
                     </div>
                 </div>
                 <div class="sub-core nsub-core">
-                    <h3 class="title">DC NUT RUNNERS-SCOOTERS</h3>
-                    <div class="machine bdr-tp" v-for="(machine, index) in slicedDcMachine(5, dcMachine.length)"
+                    <h3 class="title bdr-bt">DC NUT RUNNERS-SCOOTERS</h3>
+                    <div class="machine bdr-bt" v-for="(machine, index) in slicedDcMachine(5, dcMachine.length)"
                         :key="index">
                         <div class="machine-dt">
                             <h4 class="sub-title">Clutch Pulley-SC</h4>
-                            <img class="img-machine" src="~/assets/image/machine.png">
+                            <img class="img-machine" src="~/assets/image/dc_machine.png">
                         </div>
                         <div class="machine-lt nmachine-lt">
                             <h4 class="sub-title">ENGINE NO - {{ machine.Engine_Number }}</h4>
@@ -53,8 +53,8 @@
                     <h3 class="title bdr-bt">LEAK STATION-CORE 3</h3>
                     <div class="machine bdr-bt" v-for="(machine, index) in slicedDcMachine(0, 2)" :key="index">
                         <div class="machine-dt">
-                            <h4 class="sub-title1">Main Line</h4>
-                            <img class="img-machine" src="~/assets/image/machine.png">
+                            <h4 class="sub-title1 sub-tt-cnt">Main Line</h4>
+                            <img class="img-machine1" src="~/assets/image/ltm_machine.png">
                         </div>
                         <div class="machine-lt">
                             <h4 title="ENGINE NO - {{ machine.Engine_Number }}" class="sub-title1">ENGINE NO - {{ machine.Engine_Number }}</h4>
@@ -68,8 +68,8 @@
                     <h3 class="title bdr-bt">LEAK STATION-SCOOTERS</h3>
                     <div class="machine bdr-lft bdr-bt" v-for="(machine, index) in slicedDcMachine(0, 3)" :key="index">
                         <div class="machine-dt">
-                            <h4 class="sub-title1">Main Line</h4>
-                            <img class="img-machine" src="~/assets/image/machine.png">
+                            <h4 class="sub-title1 sub-tt-cnt">Main Line</h4>
+                            <img class="img-machine1" src="~/assets/image/ltm_machine.png">
                         </div>
                         <div class="machine-lt">
                             <h4 class="sub-title1">ENGINE NO - {{ machine.Engine_Number }}</h4>
@@ -104,16 +104,16 @@ export default {
         async machineListDetails() {
             try {
                 const response = await machineList();
-                if (response.value?.statusCode === 200) {
+                if (response?.value?.statusCode === 200) {
                     if (response.value.data) {
                         this.dcMachine = response.value.data.dcMachine
                         this.ltmMachine = response.value.data.ltmMachine
                     }
                 } else {
-                    console.error("Error", response.data?.value);
+                    console.log("MachineListDetailsError", response?.data?.value);
                 }
             } catch (error) {
-                console.error("Error", error);
+                console.error("Catch Error", error);
             }
         },
         slicedDcMachine(start, end) {
@@ -198,6 +198,14 @@ export default {
     margin-top: 15px;
 }
 
+.img-machine1 {
+    width: 90px;
+    padding: 0px;
+    box-shadow: -2px 6px 10px rgba(-40, 30, 10, 5.1);
+    margin: 5px;
+    margin-top: 15px;
+}
+
 h2 {
     background-color: #ff3306;
     text-align: center;
@@ -243,6 +251,10 @@ p {
     -webkit-box-orient: vertical;
     text-overflow: ellipsis;
     -webkit-line-clamp: 2;
+}
+
+.sub-tt-cnt{
+    padding: 5px;
 }
 
 .spd-ls {

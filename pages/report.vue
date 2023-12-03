@@ -31,7 +31,7 @@
                 <input id="search" class="search" v-model="searchValue" placeholder="Search EIN Number" />
             </div>
             <div>
-                <button class="submit" type="submit" @click.prevent="fetchData()">Submit</button>
+                <button class="submit" type="submit" @click.prevent="fetchMachineData()">Submit</button>
             </div>
             <div>
                 <button class="clear" type="submit" @click.prevent="clearFilter()">Clear All</button>
@@ -86,8 +86,8 @@
 </template>
 
 <script>
-import { saveAs } from 'file-saver';
-import { machineDropoList } from '../service/api/machine';
+import saveAs from 'file-saver';
+import { machineDropoList, machineListDetails } from '../service/api/machine';
 export default {
     data() {
         return {
@@ -104,8 +104,9 @@ export default {
                 "3", "Core 3"],
         }
     },
-    async created() {
+    async computed() {
         await this.fetchMachineById();
+        await this.fetchMachineData();
     },
     methods: {
         async reportDownload() {
@@ -127,7 +128,7 @@ export default {
                     body: JSON.stringify(request)
                 });
 
-                if (response.data?.value.statusCode === 200) {
+                if (response?.data?.value.statusCode === 200) {
                     if (response.data.value.tabledata) {
                         const uint8Array = new Uint8Array(response.data.value.tabledata.data);
                         const blobs = new Blob([uint8Array], {
@@ -136,33 +137,35 @@ export default {
                         saveAs(blobs, 'report.xlsx');
                     }
                 } else {
-                    console.error("Error", response.data?.value);
+                    console.error("ReportDownload Error",  response.value.message);
                 }
             } catch (error) {
-                console.error("Error", error);
+                console.error("Catch Error", error);
             }
         },
         async fetchMachineById(value) {
             const response = await machineDropoList({ search: value });
-            if (response._value.data) {
-                this.machineList = response._value.data.dcMachine
+            if (response.value.data) {
+                this.machineList = response.value.data.dcMachine
             }
         },
-        async fetchData() {
+        async fetchMachineData() {
             try {
                 const response = await machineListDetails({
                     machineType: this.machineType,
-                    searchValue: this.searchValue, startDate: this.startDate,
-                    endDate: this.endDate, selectedItem: this.selectedItem,
+                    selectedItem: this.selectedItem,
+                    startDate: this.startDate,
+                    endDate: this.endDate,
+                    searchValue: this.searchValue,
                 });
-                if (response._value.data) {
-                    this.machineList = response._value.data.dcMachine
-                    this.machineList = response._value.data.dcMachine
+                if (response?.value?.data) {
+                    this.machineList = response.value.data
+                    this.machineList = response.value.data
                 } else {
-                    console.error("Error", response);
+                    console.error("FetchMachineData Error", response.value.message);
                 }
             } catch (error) {
-                console.error("Error", error);
+                console.error("Catch Error", error);
             }
         },
         clearFilter() {

@@ -22,7 +22,7 @@
                         DatAct</NuxtLink>
                 </section>
                 <div style="display: flex;align-items: center;gap: 10px;">
-                    <h2 style="color: white;">Data CT Admin</h2>
+                    <h2 style="color: white;">Admin</h2>
                     <div class="profile">
                         <svg fill="#ffffff" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" viewBox="0 0 45.53 45.53"

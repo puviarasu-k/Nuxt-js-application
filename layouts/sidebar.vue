@@ -1,10 +1,12 @@
 <template>
     <div class="sidebar">
-        <h2 style="text-align: center;padding-top: 7px;">DatACT</h2>
-        <hr style="width: 100%;" />
+        <img class="img-machine" src="~/assets/image/logo.png">
+        <div>
+        </div>
+        <hr style="width: 100%;    margin-top: 0px;" />
         <section style="display: flex;flex-direction: column;gap: 5px;">
             <NuxtLink to="/dashboard" active-class="summa" class="sidebar-button">Dashboard</NuxtLink>
-            <NuxtLink to="/station" active-class="summa" class="sidebar-button">Station</NuxtLink>
+            <!-- <NuxtLink to="/station" active-class="summa" class="sidebar-button">Station</NuxtLink> -->
             <NuxtLink to="/report" active-class="summa" class="sidebar-button">Report</NuxtLink>
         </section>
     </div>
