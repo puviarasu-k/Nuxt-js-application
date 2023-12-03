@@ -58,7 +58,7 @@ const machines = [
                 </tr>
             </thead>
             <tbody>
-                <tr v-for="item in machines">
+                <tr v-for="item in machines" :key="item">
                     <td>{{ item.sno }}</td>
                     <td>{{ item.station }}</td>
                     <td>{{ item.model }}</td>

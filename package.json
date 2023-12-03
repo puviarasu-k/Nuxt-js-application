@@ -14,8 +14,10 @@
   "license": "MIT",
   "devDependencies": {
     "@nuxt/devtools": "latest",
+    "@nuxt/image": "^1.1.0",
     "electron": "^27.1.2",
     "nuxt": "^3.8.2",
+    "sass": "^1.69.5",
     "vue": "^3.3.8",
     "vue-router": "^4.2.5"
   },

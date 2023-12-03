@@ -59,16 +59,16 @@ export default {
         async submit(event) {
             event.preventDefault();
             if (username.value !== '' && password.value !== '') {
-                
+
                 let body = {
                     userName: username.value,
                     password: password.value
                 }
 
                 const data = await login(body); // API
-                
+
                 if (data?.value?.statusCode == 200) {
-                    navigateTo('/home');
+                    navigateTo('/dashboard');
                 }
                 else {
                     this.errorMessage = 'Username or Password is incorrect'
@@ -82,7 +82,7 @@ definePageMeta({
 })
 </script>
   
-<style>
+<style lang="scss">
 .input-group {
     position: relative;
     display: inline-block;

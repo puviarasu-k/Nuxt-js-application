@@ -9,7 +9,7 @@ export default {
 </script>
 
 <template>
-  <title>Unipick</title>
+  <title>DatACT</title>
   <NuxtLayout>
     <NuxtPage />
   </NuxtLayout>

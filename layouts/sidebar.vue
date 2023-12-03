@@ -1,10 +1,10 @@
 <template>
     <div class="sidebar">
-        <h2 style="text-align: center;padding-top: 7px;">Sidebar</h2>
+        <h2 style="text-align: center;padding-top: 7px;">DatACT</h2>
         <hr style="width: 100%;" />
         <section style="display: flex;flex-direction: column;gap: 5px;">
-            <NuxtLink to="/home" active-class="summa" class="sidebar-button">Home</NuxtLink>
-            <NuxtLink to="/static" active-class="summa" class="sidebar-button">Static</NuxtLink>
+            <NuxtLink to="/dashboard" active-class="summa" class="sidebar-button">Dashboard</NuxtLink>
+            <NuxtLink to="/station" active-class="summa" class="sidebar-button">Station</NuxtLink>
             <NuxtLink to="/report" active-class="summa" class="sidebar-button">Report</NuxtLink>
         </section>
     </div>

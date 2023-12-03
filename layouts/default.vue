@@ -1,13 +1,3 @@
-<script>
-export default {
-    data() {
-        return {
-            isOpen: true,
-        }
-    }
-}
-</script>
-
 <template>
     <div :class="`main-layout ${isOpen ? 'active' : ''}`">
         <NuxtLayout :name="'sidebar'" />
@@ -17,7 +7,7 @@ export default {
                 <section style="display: flex;align-items: center;">
                     <button style="cursor: pointer;background: transparent;;border: none;transition: all 0.3s ease-in-out;"
                         :style="isOpen ? '' : 'transform: rotate(180deg)'" type="button" @click="isOpen = !isOpen">
-                        <svg width="34px" height="34px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        <!-- <svg width="34px" height="34px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
                             stroke="#000000">
                             <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
                             <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
@@ -25,10 +15,11 @@ export default {
                                 <path d="M4 4V20M8 12H20M20 12L16 8M20 12L16 16" stroke="#ffffff" stroke-width="2"
                                     stroke-linecap="round" stroke-linejoin="round"></path>
                             </g>
-                        </svg>
+                        </svg> -->
+                        <img class="img-machine" src="~/assets/svg/menu.svg">
                     </button>
-                    <NuxtLink style="color: white;text-decoration: none; font-size: 1.5em;font-weight: bold;" to="/home">
-                        REPORTY</NuxtLink>
+                    <NuxtLink style="color: white;text-decoration: none; font-size: 2em;font-weight: bold;" to="/dashboard">
+                        DatAct</NuxtLink>
                 </section>
                 <div style="display: flex;align-items: center;gap: 10px;">
                     <h2 style="color: white;">Data CT Admin</h2>
@@ -47,9 +38,9 @@ export default {
                             </g>
                         </svg>
                         <section class="profile-dropdown">
-                            <button class="dorpdownbutton"
+                            <!-- <button class="dorpdownbutton"
                                 style="width: 100%;border: none;padding-block: 10px;font-size: medium;background-color: transparent;cursor: pointer;border-bottom: 1px solid rgb(216, 212, 212);"
-                                type="button">Change Password</button>
+                                type="button">Change Password</button> -->
                             <button class="dorpdownbutton"
                                 style="width: 100%;border: none;padding-block: 10px;font-size: medium;background-color: transparent;cursor: pointer;"
                                 type="button">
@@ -66,6 +57,15 @@ export default {
     </div>
 </template>
 
+<script>
+export default {
+    data() {
+        return {
+            isOpen: true,
+        }
+    }
+}
+</script>
 <style>
 .profile {
     width: 40px;
@@ -84,12 +84,12 @@ export default {
     position: absolute;
     flex-direction: column;
     justify-content: space-between;
-    width: 150px;
+    width: 120px;
     display: none;
     border: 1px solid rgb(216, 212, 212);
     background-color: white;
-    height: 75px;
-    right: 40%;
+    height: 35px;
+    right: 5%;
     border-radius: 5px;
     top: 100%;
 }
