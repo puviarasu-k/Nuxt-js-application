@@ -2,16 +2,16 @@
     <div>
         <div class="mch">
             <div style="position: relative;">
-                <label for="machineType" class="over-title">Engine
+                <label for="machineType" class="over-title">Asset
                     Type</label>
-                <select id="machineType" class="mch-type" v-model="machineType">
+                <select id="machineType" class="mch-type" v-model="machineType" @change="fetchMachineData">
                     <option :value="'DC'" selected>DC</option>
                     <option :value="'LTM'" selected>LTM</option>
                 </select>
             </div>
             <div style="position: relative;">
                 <label for="selectedItem" class="over-title">Engine No</label>
-                <select id="selectedItem" class="mch-dpd" v-model="selectedItem">
+                <select id="selectedItem" class="mch-dpd" v-model="selectedItem" @change="fetchMachineData">
                     <option v-if="selectedItem === ''" :value="''" selected>Choose Engine</option>
                     <option v-for="machine in machineList" :key="machine" :value="machine.Engine_Number">
                         {{ machine.Engine_Number }}
@@ -27,11 +27,11 @@
                 <input id="endDate" type="date" class="date" v-model="endDate" placeholder="Search EIN Number" />
             </div>
             <div style="position: relative;">
-                <label for="search" class="over-title">EIN Number</label>
-                <input id="search" class="search" v-model="searchValue" placeholder="Search EIN Number" />
+                <label for="search" class="over-title">Engine Number</label>
+                <input id="search" class="search" v-model="searchValue" placeholder="Search Engine Number" />
             </div>
             <div>
-                <button class="submit" type="submit" @click.prevent="fetchMachineData()">Submit</button>
+                <button class="submit" type="submit" @click.prevent="fetchMachineData()">Search</button>
             </div>
             <div>
                 <button class="clear" type="submit" @click.prevent="clearFilter()">Clear All</button>
@@ -78,7 +78,7 @@
                     <th v-for="clm in machineColumn" :key="clm">{{ clm }}</th>
                 </tr>
                 <tr v-for="val in machineValue" :key="val">
-                    <td v-for="val in machineValue" :key="val">{{ val }}</td>
+                    <td v-for="clm in machineColumn" :key="clm">{{ val[clm] }}</td>
                 </tr>
             </table>
         </div>
@@ -91,7 +91,6 @@ import { machineDropoList, machineListDetails } from '../service/api/machine';
 export default {
     data() {
         return {
-            selectFilt: "EINB",
             searchValue: "",
             startDate: "",
             endDate: "",
@@ -100,76 +99,99 @@ export default {
             machineList: [],
             search: '',
             machineColumn: ["Engine_Number", "Asset_Code", "Asset_Type", "Asset_Name", "Asset_Make", "Asset_Model", "Spindle_Count", "Line"],
-            machineValue: ["ND16E-8219025", "DC08", "DC", "Flywheel-Core 3", "Atlas Copco", "PowerMacs 4000",
-                "3", "Core 3"],
+            machineValue: [],
         }
     },
-    async computed() {
+    async created() {
         await this.fetchMachineById();
         await this.fetchMachineData();
     },
     methods: {
+        async handleAssertType() {
+            this.selectedItem = "";
+            this.fetchMachineData();
+            this.fetchMachineById(this.machineType);
+        },
         async reportDownload() {
             try {
-                if (this.selectFilt === "EINB" && this.searchValue === "") {
-                    return;
-                }
-                const request =
-                    this.selectFilt === "EINB"
-                        ? { filterType: "EIN", searchValue: this.searchValue }
-                        : { filterType: "DATE", startDate: this.startDate, endDate: this.endDate };
-
-                const response = await useFetch('http://localhost:9600/api/reportDownload', {
+                const data = await useFetch('http://localhost:9600/api/reportDownload', {
                     method: 'POST',
                     credentials: 'include',
                     headers: {
                         'Content-Type': 'application/json'
                     },
-                    body: JSON.stringify(request)
-                });
-
-                if (response?.data?.value.statusCode === 200) {
-                    if (response.data.value.tabledata) {
-                        const uint8Array = new Uint8Array(response.data.value.tabledata.data);
+                    body: JSON.stringify({
+                        machineType: this.machineType,
+                        selectedItem: this.selectedItem,
+                        startDate: this.startDate,
+                        endDate: this.endDate,
+                        searchValue: this.searchValue
+                    })
+                })
+                const response = data?.data?._value;
+                if (response?.statusCode === 200) {
+                    if (response.tabledata) {
+                        const uint8Array = new Uint8Array(response.tabledata.data);
                         const blobs = new Blob([uint8Array], {
                             type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
                         });
                         saveAs(blobs, 'report.xlsx');
                     }
                 } else {
-                    console.error("ReportDownload Error",  response.value.message);
+                    console.error("ReportDownload Error", response.value.message);
                 }
             } catch (error) {
                 console.error("Catch Error", error);
             }
         },
         async fetchMachineById(value) {
-            const response = await machineDropoList({ search: value });
-            if (response.value.data) {
-                this.machineList = response.value.data.dcMachine
+            const data = await useFetch('http://localhost:9600/api/machineDropList', {
+                method: 'POST',
+                credentials: 'include',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ machineType: this.machineType })
+            })
+            const response = data?.data?._value;
+            if (response && response.statusCode === 200) {
+                if (response.data) {
+                    this.machineList = response.data
+                }
+            } else {
+                console.log("FetchMachineById", response);
             }
         },
         async fetchMachineData() {
             try {
-                const response = await machineListDetails({
-                    machineType: this.machineType,
-                    selectedItem: this.selectedItem,
-                    startDate: this.startDate,
-                    endDate: this.endDate,
-                    searchValue: this.searchValue,
-                });
-                if (response?.value?.data) {
-                    this.machineList = response.value.data
-                    this.machineList = response.value.data
+                const data = await useFetch('http://localhost:9600/api/machineListDetails', {
+                    method: 'POST',
+                    credentials: 'include',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        machineType: this.machineType,
+                        selectedItem: this.selectedItem,
+                        startDate: this.startDate,
+                        endDate: this.endDate,
+                        searchValue: this.searchValue
+                    })
+                })
+                const response = data?.data?._value;
+                if (response && response.statusCode === 200) {
+                    if (response.data) {
+                        this.machineColumn = response.data.length ? Object.keys(response.data[0]) : this.machineColumn;
+                        this.machineValue = response.data;
+                    }
                 } else {
-                    console.error("FetchMachineData Error", response.value.message);
+                    console.log("MachineListDetailsError", response);
                 }
             } catch (error) {
-                console.error("Catch Error", error);
+                console.log("Catch Error", error);
             }
         },
         clearFilter() {
-            this.selectFilt = "EINB";
             this.searchValue = "";
             this.startDate = "";
             this.endDate = "";

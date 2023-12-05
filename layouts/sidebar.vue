@@ -1,6 +1,6 @@
 <template>
     <div class="sidebar">
-        <img class="img-machine" src="~/assets/image/logo.png">
+        <img class="img-mach" src="~/assets/image/logo.png">
         <div>
         </div>
         <hr style="width: 100%;    margin-top: 0px;" />
@@ -47,5 +47,9 @@
     background-color: rgb(0, 58, 98);
     color: white;
     border-block: 1px solid white;
+}
+
+.img-mach{
+    height: 50px;
 }
 </style>

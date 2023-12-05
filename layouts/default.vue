@@ -3,26 +3,20 @@
         <NuxtLayout :name="'sidebar'" />
         <div>
             <header
-                style="height: 64px;background-color: #003a62;display: flex;align-items: center;justify-content: space-between;padding-inline: 10px;">
+                style="height: 50px;background-color: #003a62;display: flex;align-items: center;justify-content: space-between;">
                 <section style="display: flex;align-items: center;">
                     <button style="cursor: pointer;background: transparent;;border: none;transition: all 0.3s ease-in-out;"
                         :style="isOpen ? '' : 'transform: rotate(180deg)'" type="button" @click="isOpen = !isOpen">
-                        <!-- <svg width="34px" height="34px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
-                            stroke="#000000">
-                            <g id="SVGRepo_bgCarrier" stroke-width="0"></g>
-                            <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g>
-                            <g id="SVGRepo_iconCarrier">
-                                <path d="M4 4V20M8 12H20M20 12L16 8M20 12L16 16" stroke="#ffffff" stroke-width="2"
-                                    stroke-linecap="round" stroke-linejoin="round"></path>
-                            </g>
-                        </svg> -->
-                        <img class="img-machine" src="~/assets/svg/menu.svg">
+                        <img class="img-machines" src="~/assets/svg/menu.svg">
                     </button>
                     <NuxtLink style="color: white;text-decoration: none; font-size: 2em;font-weight: bold;" to="/dashboard">
                         DatAct</NuxtLink>
                 </section>
+                <div>
+                    <h2 class="title-pj">Part Process Data Traceability System</h2>
+                </div>
                 <div style="display: flex;align-items: center;gap: 10px;">
-                    <h2 style="color: white;">Admin</h2>
+                    <h2 style="color: white;">DatACT Admin</h2>
                     <div class="profile">
                         <svg fill="#ffffff" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" viewBox="0 0 45.53 45.53"
@@ -67,12 +61,17 @@ export default {
 }
 </script>
 <style>
+.title-pj {
+    color: white;
+    font-weight: 900;
+}
+
 .profile {
     width: 40px;
     height: 40px;
     position: relative;
     cursor: pointer;
-    padding-right: 20px;
+    padding-right: 15px;
 }
 
 .dorpdownbutton:hover {

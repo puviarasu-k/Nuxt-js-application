@@ -1,18 +1,18 @@
 import { useFetch } from "nuxt/app"
 
 export async function machineList() {
-    const { data: data } = await useFetch('http://localhost:9600/api/machineList', {
+    const data = await useFetch('http://localhost:9600/api/machineList', {
         method: 'POST',
         credentials: 'include',
         headers: {
             'Content-Type': 'application/json'
         },
-    })
-    return data;
+    });
+    return data?.data?._value;
 }
 
 export async function machineListDetails(body) {
-    const { data: data } = await useFetch('http://localhost:9600/api/machineListDetails', {
+    const data = await useFetch('http://localhost:9600/api/machineListDetails', {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -20,11 +20,11 @@ export async function machineListDetails(body) {
         },
         body: JSON.stringify(body)
     })
-    return data;
+    return data?.data?._value;
 }
 
 export async function machineDropoList(body) {
-    const { data: data } = await useFetch('http://localhost:9600/api/machineDropList', {
+    const data = await useFetch('http://localhost:9600/api/machineDropList', {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -32,11 +32,11 @@ export async function machineDropoList(body) {
         },
         body: JSON.stringify(body)
     })
-    return data;
+    return data?.data?._value;
 }
 
 export async function reportDownload(body) {
-    const { data: data } = await useFetch('http://localhost:9600/api/reportDownload', {
+    const data = await useFetch('http://localhost:9600/api/reportDownload', {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -44,5 +44,5 @@ export async function reportDownload(body) {
         },
         body: JSON.stringify(body)
     })
-    return data;
+    return data?.data?._value;
 }
