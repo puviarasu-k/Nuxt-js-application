@@ -4,17 +4,17 @@
             <div style="position: relative;">
                 <label for="machineType" class="over-title">Asset
                     Type</label>
-                <select id="machineType" class="mch-type" v-model="machineType" @change="fetchMachineData">
+                <select id="machineType" class="mch-type" v-model="machineType" @change="handleAssertType">
                     <option :value="'DC'" selected>DC</option>
                     <option :value="'LTM'" selected>LTM</option>
                 </select>
             </div>
             <div style="position: relative;">
-                <label for="selectedItem" class="over-title">Engine No</label>
+                <label for="selectedItem" class="over-title">Asset Code</label>
                 <select id="selectedItem" class="mch-dpd" v-model="selectedItem" @change="fetchMachineData">
-                    <option v-if="selectedItem === ''" :value="''" selected>Choose Engine</option>
-                    <option v-for="machine in machineList" :key="machine" :value="machine.Engine_Number">
-                        {{ machine.Engine_Number }}
+                    <option v-if="selectedItem === ''" :value="''" selected>Choose Asset Code</option>
+                    <option v-for="machine in machineList" :key="machine" :value="machine.Asset_Code">
+                        {{ machine.Asset_Code }}
                     </option>
                 </select>
             </div>
@@ -103,14 +103,14 @@ export default {
         }
     },
     async created() {
-        await this.fetchMachineById();
+        await this.fetchMachineById("DC");
         await this.fetchMachineData();
     },
     methods: {
         async handleAssertType() {
             this.selectedItem = "";
-            this.fetchMachineData();
-            this.fetchMachineById(this.machineType);
+            await this.fetchMachineById(this.machineType);
+            await this.fetchMachineData();
         },
         async reportDownload() {
             try {
@@ -151,7 +151,7 @@ export default {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ machineType: this.machineType })
+                body: JSON.stringify({ machineType: value })
             })
             const response = data?.data?._value;
             if (response && response.statusCode === 200) {
@@ -198,6 +198,7 @@ export default {
             this.machineType = "DC";
             this.selectedItem = "";
             this.search = '';
+            this.fetchMachineData();
         }
     }
 }
