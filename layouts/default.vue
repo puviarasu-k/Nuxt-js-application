@@ -38,7 +38,7 @@
                             <button class="dorpdownbutton"
                                 style="width: 100%;border: none;padding-block: 10px;font-size: medium;background-color: transparent;cursor: pointer;"
                                 type="button">
-                                <NuxtLink to="/" class="dorpdownbutton"
+                                <NuxtLink class="dorpdownbutton" @click="logout"
                                     style="color: black;text-decoration: none;display: block;width: 100%;">Log Out
                                 </NuxtLink>
                             </button>
@@ -52,10 +52,19 @@
 </template>
 
 <script>
+import nuxtStorage from 'nuxt-storage';
+
 export default {
     data() {
         return {
             isOpen: true,
+        }
+    },
+    methods:{
+        logout(){
+            nuxtStorage.localStorage.removeItem("user");
+            nuxtStorage.localStorage.setData("path", "/");
+            navigateTo('/');
         }
     }
 }

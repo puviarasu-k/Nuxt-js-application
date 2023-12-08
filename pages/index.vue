@@ -45,6 +45,7 @@
 
 <script>
 import login from '../service/api/login'
+import nuxtStorage from 'nuxt-storage';
 
 export default {
     data() {
@@ -59,15 +60,14 @@ export default {
         async submit(event) {
             event.preventDefault();
             if (username.value !== '' && password.value !== '') {
-
                 let body = {
                     userName: username.value,
                     password: password.value
                 }
-
-                const data = await login(body); // API
-
-                if (data?.value?.statusCode == 200) {
+                const response = await login(body);
+                if (response?.statusCode == 200) {
+                    nuxtStorage.localStorage.setData("user", JSON.stringify(response.data));
+                    nuxtStorage.localStorage.setData("path", "/dashboard");
                     navigateTo('/dashboard');
                 }
                 else {

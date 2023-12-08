@@ -1,77 +1,52 @@
 <template>
     <div>
         <div class="mch">
-            <div style="position: relative;">
-                <label for="machineType" class="over-title">Asset
-                    Type</label>
+            <div style="position: relative">
+                <label for="machineType" class="over-title">Asset Type</label>
                 <select id="machineType" class="mch-type" v-model="machineType" @change="handleAssertType">
-                    <option :value="'DC'" selected>DC</option>
-                    <option :value="'LTM'" selected>LTM</option>
+                    <option class="opt-md" :value="'DC'" selected>DC</option>
+                    <option class="opt-md" :value="'LTM'" selected>LTM</option>
                 </select>
             </div>
-            <div style="position: relative;">
+            <div style="position: relative">
                 <label for="selectedItem" class="over-title">Asset Code</label>
                 <select id="selectedItem" class="mch-dpd" v-model="selectedItem" @change="fetchMachineData">
-                    <option v-if="selectedItem === ''" :value="''" selected>Choose Asset Code</option>
-                    <option v-for="machine in machineList" :key="machine" :value="machine.Asset_Code">
+                    <option v-if="selectedItem === ''" class="opt-md" :value="''" selected>
+                        Choose Asset Code
+                    </option>
+                    <option v-for="machine in machineList" :key="machine" class="opt-md" :value="machine.Asset_Code">
                         {{ machine.Asset_Code }}
                     </option>
                 </select>
             </div>
-            <div style="position: relative;">
+            <div style="position: relative">
                 <label for="startDate" class="over-title">Start Date</label>
                 <input id="startDate" type="date" class="date" v-model="startDate" placeholder="Search EIN Number" />
             </div>
-            <div style="position: relative;">
+            <div style="position: relative">
                 <label for="endDate" class="over-title">End Date</label>
                 <input id="endDate" type="date" class="date" v-model="endDate" placeholder="Search EIN Number" />
             </div>
-            <div style="position: relative;">
+            <div style="position: relative">
                 <label for="search" class="over-title">Engine Number</label>
                 <input id="search" class="search" v-model="searchValue" placeholder="Search Engine Number" />
             </div>
             <div>
-                <button class="submit" type="submit" @click.prevent="fetchMachineData()">Search</button>
+                <button class="submit" type="submit" @click.prevent="fetchMachineData()">
+                    Search
+                </button>
             </div>
             <div>
-                <button class="clear" type="submit" @click.prevent="clearFilter()">Clear All</button>
+                <button class="clear" type="submit" @click.prevent="clearFilter()">
+                    Clear All
+                </button>
             </div>
             <div>
-                <button class="downld" type="submit" @click.prevent="reportDownload()">Download</button>
+                <button class="downld" type="submit" @click.prevent="reportDownload()">
+                    Download
+                </button>
             </div>
         </div>
-        <!-- <div class="report-page">
-            <form class="flex">
-                <h2>REPORT GENERATION</h2>
-                <div style="display: grid;background-color: #e7ebee;width: 100%;padding-block: 15px;">
-                    <section>
-                        <div class="flex" style="gap: 5px;">
-                            <input type="radio" v-model="selectFilt" value="EINB" name="RG" id="EINB" required>
-                            <label for="EINB" style="font-size: larger;font-weight: 600;opacity: 0.8;">ENGINE IDENTIFICATION
-                                NUMBER
-                                BASED</label>
-                        </div>
-                        <div style="width: 100%;padding-left: 150px;">
-                            <label style="font-size: large;padding-right: 10px;" for="EIN">EIN:</label>
-                            <input type="text" v-model="searchValue" id="EIN" placeholder="Search the EIN">
-                        </div>
-                    </section>
-                    <section>
-                        <div class="flex" style="gap: 5px;">
-                            <input type="radio" v-model="selectFilt" value="DB" name="RG" id="DB">
-                            <label for="DB" style="font-size: larger;font-weight: 600;opacity: 0.8;">DATE BASED</label>
-                        </div>
-                        <div style="gap: 10px;width: 100%;padding-left: 50px;;" class="flex">
-                            <label style="font-size: large;" for="fromDate">From Date :</label>
-                            <input type="date" name="fromDate" id="fromDate">
-                            <label style="font-size: large;" for="toDate">End Date :</label>
-                            <input type="date" name="toDate" id="toDate">
-                        </div>
-                    </section>
-                    <button type="submit" @click.prevent="reportDownload()">Get Report</button>
-                </div>
-            </form>
-        </div> -->
         <div class="tabl">
             <table>
                 <tr class="tr-cls">
@@ -86,8 +61,8 @@
 </template>
 
 <script>
-import saveAs from 'file-saver';
-import { machineDropoList, machineListDetails } from '../service/api/machine';
+import saveAs from "file-saver";
+import { machineDropoList, machineListDetails } from "../service/api/machine";
 export default {
     data() {
         return {
@@ -97,14 +72,23 @@ export default {
             machineType: "DC",
             selectedItem: "",
             machineList: [],
-            search: '',
-            machineColumn: ["Engine_Number", "Asset_Code", "Asset_Type", "Asset_Name", "Asset_Make", "Asset_Model", "Spindle_Count", "Line"],
+            search: "",
+            machineColumn: [
+                "Engine_Number",
+                "Asset_Code",
+                "Asset_Type",
+                "Asset_Name",
+                "Asset_Make",
+                "Asset_Model",
+                "Spindle_Count",
+                "Line",
+            ],
             machineValue: [],
-        }
+        };
     },
-    async created() {
-        await this.fetchMachineById("DC");
-        await this.fetchMachineData();
+    created() {
+        this.fetchMachineById("DC");
+        this.fetchMachineData();
     },
     methods: {
         async handleAssertType() {
@@ -114,49 +98,52 @@ export default {
         },
         async reportDownload() {
             try {
-                const data = await useFetch('http://localhost:9600/api/reportDownload', {
-                    method: 'POST',
-                    credentials: 'include',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        machineType: this.machineType,
-                        selectedItem: this.selectedItem,
-                        startDate: this.startDate,
-                        endDate: this.endDate,
-                        searchValue: this.searchValue
-                    })
-                })
+                const data = await useFetch(
+                    "http://localhost:9600/api/reportDownload",
+                    {
+                        method: "POST",
+                        credentials: "include",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            machineType: this.machineType,
+                            selectedItem: this.selectedItem,
+                            startDate: this.startDate,
+                            endDate: this.endDate,
+                            searchValue: this.searchValue,
+                        }),
+                    }
+                );
                 const response = data?.data?._value;
                 if (response?.statusCode === 200) {
                     if (response.tabledata) {
                         const uint8Array = new Uint8Array(response.tabledata.data);
                         const blobs = new Blob([uint8Array], {
-                            type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+                            type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
                         });
-                        saveAs(blobs, 'report.xlsx');
+                        saveAs(blobs, "report.xlsx");
                     }
                 } else {
-                    console.error("ReportDownload Error", response.value.message);
+                    console.log("ReportDownload Error", response.value.message);
                 }
             } catch (error) {
-                console.error("Catch Error", error);
+                console.log("Catch Error", error);
             }
         },
         async fetchMachineById(value) {
-            const data = await useFetch('http://localhost:9600/api/machineDropList', {
-                method: 'POST',
-                credentials: 'include',
+            const data = await useFetch("http://localhost:9600/api/machineDropList", {
+                method: "POST",
+                credentials: "include",
                 headers: {
-                    'Content-Type': 'application/json'
+                    "Content-Type": "application/json",
                 },
-                body: JSON.stringify({ machineType: value })
-            })
+                body: JSON.stringify({ machineType: value }),
+            });
             const response = data?.data?._value;
             if (response && response.statusCode === 200) {
                 if (response.data) {
-                    this.machineList = response.data
+                    this.machineList = response.data;
                 }
             } else {
                 console.log("FetchMachineById", response);
@@ -164,24 +151,29 @@ export default {
         },
         async fetchMachineData() {
             try {
-                const data = await useFetch('http://localhost:9600/api/machineListDetails', {
-                    method: 'POST',
-                    credentials: 'include',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        machineType: this.machineType,
-                        selectedItem: this.selectedItem,
-                        startDate: this.startDate,
-                        endDate: this.endDate,
-                        searchValue: this.searchValue
-                    })
-                })
+                const data = await useFetch(
+                    "http://localhost:9600/api/machineListDetails",
+                    {
+                        method: "POST",
+                        credentials: "include",
+                        headers: {
+                            "Content-Type": "application/json",
+                        },
+                        body: JSON.stringify({
+                            machineType: this.machineType,
+                            selectedItem: this.selectedItem,
+                            startDate: this.startDate,
+                            endDate: this.endDate,
+                            searchValue: this.searchValue,
+                        }),
+                    }
+                );
                 const response = data?.data?._value;
                 if (response && response.statusCode === 200) {
                     if (response.data) {
-                        this.machineColumn = response.data.length ? Object.keys(response.data[0]) : this.machineColumn;
+                        this.machineColumn = response.data.length
+                            ? Object.keys(response.data[0])
+                            : this.machineColumn;
                         this.machineValue = response.data;
                     }
                 } else {
@@ -197,11 +189,11 @@ export default {
             this.endDate = "";
             this.machineType = "DC";
             this.selectedItem = "";
-            this.search = '';
+            this.search = "";
             this.fetchMachineData();
-        }
-    }
-}
+        },
+    },
+};
 </script>
 
 <style lang="scss">
@@ -270,71 +262,9 @@ export default {
         border: 2px solid #00385e;
         padding: 10px 30px;
     }
-}
 
-.flex {
-    display: flex;
-    align-items: center;
-}
-
-.report-page {
-    height: calc(100vh - 64px);
-    display: grid;
-    place-items: center;
-
-    >form {
-        flex-direction: column;
-        width: 50%;
-        height: 400px;
-        justify-content: space-around;
-        border: 2px solid rgb(0, 58, 98);
-
-        & section {
-            place-self: start;
-            display: grid;
-            gap: 20px;
-            padding: 25px;
-        }
-
-        & h2 {
-            color: rgb(0, 58, 98);
-            margin: 0;
-            text-decoration: underline;
-        }
-    }
-
-    & input[type='text'] {
-        width: 300px;
-        padding: 8px 5px;
-    }
-
-    & input[type='radio'] {
-        height: 20px;
-        width: 20px;
-    }
-
-    & input[type='date'] {
-        width: 150px;
-        font-size: larger;
-        padding: 3px 0px;
-    }
-
-    & button {
-        width: 150px;
-        padding: 15px;
-        border: none;
-        background-color: rgb(33, 91, 129);
-        cursor: pointer;
-        place-self: center;
-        color: rgb(255, 255, 255);
-        border-radius: 5px;
-        font-size: medium;
-        transition: all 0.2s ease-in-out;
-    }
-
-    & button:hover {
-        background-color: rgb(0, 58, 98);
-        color: white;
+    .opt-md {
+        font-size: 14px;
     }
 }
 

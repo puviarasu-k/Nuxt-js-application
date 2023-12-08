@@ -1,8 +1,19 @@
 <script>
+import nuxtStorage from 'nuxt-storage';
+
 export default {
   data() {
     return {
       isOpen: true
+    }
+  },
+  mounted() {
+    const user = nuxtStorage.localStorage.getData("user");
+    if (user) {
+      const path = nuxtStorage.localStorage.getData("path");
+      navigateTo(path);
+    } else {
+      navigateTo('/');
     }
   }
 }

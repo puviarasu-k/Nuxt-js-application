@@ -9,5 +9,5 @@ export default async function login(body) {
         },
         body: JSON.stringify(body)
     })
-    return data;
+    return data.value;
 }

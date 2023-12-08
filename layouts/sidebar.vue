@@ -5,14 +5,30 @@
         </div>
         <hr style="width: 100%;    margin-top: 0px;" />
         <section style="display: flex;flex-direction: column;gap: 5px;">
-            <NuxtLink to="/dashboard" active-class="summa" class="sidebar-button">Dashboard</NuxtLink>
+            <NuxtLink @click="changePath('/dashboard')" to="/dashboard" active-class="summa" class="sidebar-button">Dashboard</NuxtLink>
             <!-- <NuxtLink to="/station" active-class="summa" class="sidebar-button">Station</NuxtLink> -->
-            <NuxtLink to="/report" active-class="summa" class="sidebar-button">Report</NuxtLink>
+            <NuxtLink @click="changePath('/report')" to="/report" active-class="summa" class="sidebar-button">Report</NuxtLink>
         </section>
     </div>
     <slot />
 </template>
 
+<script>
+import nuxtStorage from 'nuxt-storage';
+
+export default {
+    data() {
+        return {
+            isOpen: true,
+        }
+    },
+    methods: {
+        changePath(path) {
+            nuxtStorage.localStorage.setData("path", path);
+        }
+    }
+}
+</script>
 <style>
 .sidebar {
     height: 100vh;
@@ -49,7 +65,7 @@
     border-block: 1px solid white;
 }
 
-.img-mach{
+.img-mach {
     height: 50px;
 }
 </style>
