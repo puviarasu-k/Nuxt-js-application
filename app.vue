@@ -30,7 +30,7 @@ export default {
 body {
   height: 100vh;
   margin: 0;
-  font-family: monospace;
+   font-family: 'Arial';
 }
 
 #__nuxt {

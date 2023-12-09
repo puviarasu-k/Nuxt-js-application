@@ -9,7 +9,7 @@ const machines = [
     },
     {
         sno: 2,
-        station: "LEAK TESTING MACHINE",
+        station: "Leak TESTING MACHINE",
         model: "KWP/K24",
         specification: "-200 ~ +200",
         unit: "kPa",

@@ -9,14 +9,14 @@
                         :style="isOpen ? '' : 'transform: rotate(180deg)'" type="button" @click="isOpen = !isOpen">
                         <img class="img-machines" src="~/assets/svg/menu.svg">
                     </button>
-                    <NuxtLink style="color: white;text-decoration: none; font-size: 2em;font-weight: bold;" to="/dashboard">
-                        DatAct</NuxtLink>
+                    <!-- <NuxtLink style="color: white;text-decoration: none; font-size: 2em;font-weight: bold;" to="/dashboard">
+                        DatAct</NuxtLink> -->
                 </section>
                 <div>
                     <h2 class="title-pj">Part Process Data Traceability System</h2>
                 </div>
                 <div style="display: flex;align-items: center;gap: 10px;">
-                    <h2 style="color: white;">DatACT Admin</h2>
+                    <h2 style="font-size: 20px; color: white;">Admin</h2>
                     <div class="profile">
                         <svg fill="#ffffff" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg"
                             xmlns:xlink="http://www.w3.org/1999/xlink" width="40px" height="40px" viewBox="0 0 45.53 45.53"
@@ -73,6 +73,7 @@ export default {
 .title-pj {
     color: white;
     font-weight: 900;
+    font-size: 22px;
 }
 
 .profile {

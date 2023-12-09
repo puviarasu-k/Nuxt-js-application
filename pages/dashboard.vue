@@ -1,10 +1,10 @@
 <template>
     <div class="main">
         <div class="sub-main1">
-            <h2>DC NUTRUNNERS</h2>
-            <div class="core">
-                <div class="sub-core nsub-core">
-                    <h3 class="title">DC NUT RUNNERS-CORE 3</h3>
+            <h2>DC Nutrunners</h2>
+            <div class="Core">
+                <div class="sub-Core nsub-Core brd-tp brd-rt">
+                    <h3 class="title">DC Nutrunners Core 3</h3>
                     <div class="machine" v-for="(machine, index) in slicedDcMachine('Core 3')" :key="index">
                         <div class="machine-dt machine-dt-pad">
                             <h4 class="sub-title">{{ machine.assetDetails.Asset_Name || "" }}</h4>
@@ -16,8 +16,8 @@
                         </div>
                     </div>
                 </div>
-                <div class=" nsub-core">
-                    <h3 class="title">DC NUT RUNNERS-SCOOTERS</h3>
+                <div class=" nsub-Core brd-tp">
+                    <h3 class="title">DC Nutrunners Scooters</h3>
                     <div class="machine" v-for="(machine, index) in slicedDcMachine('Scooter')" :key="index">
                         <div class="machine-dt">
                             <h4 class="sub-title">{{ machine.assetDetails.Asset_Name || "" }}</h4>
@@ -33,31 +33,31 @@
         </div>
         <div class="sub-main2">
             <div style="border: 3px solid #000;">
-                <h2>Leak Stations</h2>
-                <div class="core">
-                    <div class="sub-core nsub-core">
-                        <h3 class="title">LEAK STATION-CORE 3</h3>
+                <h2>Leak Testing Machine</h2>
+                <div class="Core">
+                    <div class="sub-Core nsub-Core brd-tp brd-rt">
+                        <h3 class="title">Leak Testing Machine Core 3</h3>
                         <div class="machine" v-for="(machine, index) in slicedLRMMachine('Core-3')" :key="index">
                             <div class="machine-dt">
                                 <h4 class="sub-title">{{ machine.assetDetails.Asset_Name || "" }}</h4>
-                                <img class="img-machine1" src="~/assets/machine/LEAK.png">
+                                <img class="img-machine1" src="~/assets/machine/Leak.png">
                             </div>
                             <div class="machine-lt nmachine-lt">
                                 <h4 class="sub-title">ENGINE NO - {{ machine.Engine_Number }}</h4>
-                                <Machine :title="'LEAK TESTER'" :machine="machine" />
+                                <Machine :title="'Leak TESTER'" :machine="machine" />
                             </div>
                         </div>
                     </div>
-                    <div class=" nsub-core">
-                        <h3 class="title">DC NUT RUNNERS-SCOOTERS</h3>
+                    <div class="nsub-Core brd-tp">
+                        <h3 class="title">Leak Testing Machine Scooters</h3>
                         <div class="machine" v-for="(machine, index) in slicedLRMMachine('Scooter')" :key="index">
                             <div class="machine-dt">
                                 <h4 class="sub-title">{{ machine.assetDetails.Asset_Name || "" }}</h4>
-                                <img class="img-machine1" src="~/assets/machine/LEAK.png">
+                                <img class="img-machine1" src="~/assets/machine/Leak.png">
                             </div>
                             <div class="machine-lt nmachine-lt">
                                 <h4 class="sub-title">ENGINE NO - {{ machine.Engine_Number }}</h4>
-                                <Machine :title="'LEAK TESTER'" :machine="machine" />
+                                <Machine :title="'Leak TESTER'" :machine="machine" />
                             </div>
                         </div>
                     </div>
@@ -71,37 +71,37 @@
         </div>
         <!-- <div class="sub-main2">
             <h2>Leak Stations</h2>
-            <div class="core ">
-                <div class="sub-core">
-                    <h3 class="title">LEAK STATION-CORE 3</h3>
+            <div class="Core ">
+                <div class="sub-Core">
+                    <h3 class="title">Leak Station-Core 3</h3>
                     <div class="machine" v-for="(machine, index) in slicedLRMMachine('Core-3')"
                         :key="index">
                         <div class="machine-dt">
                             <h4 class="sub-title1 sub-tt-cnt">{{ machine.assetDetails.Asset_Name || "" }}</h4>
-                            <img class="img-machine1" src="~/assets/machine/LEAK.png">
+                            <img class="img-machine1" src="~/assets/machine/Leak.png">
                         </div>
                         <div class="machine-lt">
                             <h4 title="ENGINE NO - {{ machine.Engine_Number }}" class="sub-title1">ENGINE NO - {{
                                 machine.Engine_Number }}</h4>
                             <div class="spd-ls">
-                                <Machine :title="'LEAK TESTER'" :machine="machine" />
+                                <Machine :title="'Leak TESTER'" :machine="machine" />
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="">
-                    <h3 class="title">LEAK STATION-SCOOTERS</h3>
+                    <h3 class="title">Leak Station-Scooters</h3>
                     <div class="machine"
                         v-for="(machine, index) in slicedLRMMachine('Scooter')"
                         :key="index">
                         <div class="machine-dt">
                             <h4 class="sub-title1 sub-tt-cnt">{{ machine.assetDetails.Asset_Name || "" }}</h4>
-                            <img class="img-machine1" src="~/assets/machine/LEAK.png">
+                            <img class="img-machine1" src="~/assets/machine/Leak.png">
                         </div>
                         <div class="machine-lt">
                             <h4 class="sub-title1">ENGINE NO - {{ machine.Engine_Number }}</h4>
                             <div class="spd-ls">
-                                <Machine :title="'LEAK TESTER'" :machine="machine" />
+                                <Machine :title="'Leak TESTER'" :machine="machine" />
                             </div>
                         </div>
                     </div>
@@ -163,7 +163,7 @@ export default {
     display: flex;
     margin: 5px;
     gap: 2px;
-    font-weight: 900;
+    font-weight: 800;
 }
 
 .sub-main1 {
@@ -178,13 +178,13 @@ export default {
     gap: 2px;
 }
 
-.core {
+.Core {
     display: flex;
 }
 
-.sub-core {
+/* .sub-Core {
     margin-right: 2px;
-}
+} */
 
 .machine {
     display: flex;
@@ -192,6 +192,7 @@ export default {
 }
 
 .machine-dt {
+    width: 25%;
     text-align: center;
     margin-right: 2px;
 }
@@ -225,12 +226,13 @@ export default {
 }
 
 h2 {
-    background-color: #003960;
+    /* background-color: #003960; */
     text-align: center;
-    padding: 5px;
-    color: #fff;
+    /* padding: 5px; */
+    color: black;
     margin: 0px;
-    font-size: 16px;
+    font-size: 15px;
+    font-weight: 900;
 }
 
 p {
@@ -241,10 +243,11 @@ p {
 .title {
     text-align: center;
     padding: 5px;
-    margin: 5px 0px;
+    margin-bottom: 5px;
+    margin-top: 0px;
     background: #00385e;
     color: white;
-    font-size: 14px;
+    font-size: 13px;
 }
 
 .sub-title {
@@ -253,12 +256,12 @@ p {
     color: #fff;
     padding: 5px;
     margin: 0px;
-    font-weight: 900;
+    font-weight: 800;
     height: 20px;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 11px;
+    font-size: 10px;
 }
 
 .sub-title1 {
@@ -267,7 +270,7 @@ p {
     color: #fff;
     padding: 0px 5px 10px 5px;
     margin: 0px;
-    font-weight: 900;
+    font-weight: 800;
     height: 20px;
     justify-content: center;
     align-items: center;
@@ -289,7 +292,7 @@ p {
     justify-items: flex-start;
 } */
 
-.nsub-core {
+.nsub-Core {
     width: 50%;
 }
 
@@ -303,5 +306,12 @@ p {
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.brd-tp{
+    border-top: 3px solid #000;
+}
+.brd-rt{
+    border-right: 3px solid #000;
 }
 </style>

@@ -3,7 +3,7 @@
         <div v-if="machine.Torque_1" class="spd">
             <p :style="{ background: machine.Status_1 === 'OK' ? 'green' : 'red' }" class="frt-p">{{ machine.Torque_2 ?
                 'TOOL' : 'TOOL1' }}</p>
-            <p class="mid-p">{{ machine.Torque_1 }}<span>Pa</span></p>
+            <p class="mid-p">{{ machine.Torque_1 }} <span>Nm</span></p>
             <div class="sts">
                 <div style="text-align: start;">
                     <p class="spc-rm">Status:<span :style="{ color: machine.Status_1 === 'OK' ? 'green' : 'red' }">{{
@@ -13,11 +13,11 @@
                     <p class="spc-rm">CT:{{ machine.CT }}</p>
                 </div>
             </div>
-            <p class="mid-p">{{ machine.Angle_1 }}<span>KPa</span></p>
+            <p class="mid-p">{{ machine.Angle_1 }} <span>Deg</span></p>
         </div>
         <div v-if="machine.Torque_2" class="spd">
             <p :style="{ background: machine.Status_2 === 'OK' ? 'green' : 'red' }" class="frt-p">TOOL2</p>
-            <p class="mid-p">{{ machine.Torque_2 }}<span>Pa</span></p>
+            <p class="mid-p">{{ machine.Torque_2 }} <span>Pa</span></p>
             <div class="sts">
                 <div style="text-align: start;">
                     <p class="spc-rm">Status:<span :style="{ color: machine.Status_2 === 'OK' ? 'green' : 'red' }">{{
@@ -27,7 +27,7 @@
                     <p class="spc-rm">CT:{{ machine.CT }}</p>
                 </div>
             </div>
-            <p class="mid-p">{{ machine.Angle_2 }}<span>KPa</span></p>
+            <p class="mid-p">{{ machine.Angle_2 }} <span>KPa</span></p>
         </div>
         <div v-if="machine.Torque_3" class="spd">
             <p :style="{ background: machine.Status_3 === 'OK' ? 'green' : 'red' }" class="frt-p">TOOL3</p>
@@ -87,7 +87,7 @@ export default {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(100px, 0fr));
     justify-items: flex-start;
-    margin: 5px 0px 5px 5px;
+    margin: 4px 0px 3px 5px;
 }
 
 .spd-ls1 {
@@ -105,12 +105,12 @@ export default {
 }
 
 .spd {
-    margin: 3px 2px;
+    margin: 2px 2px;
     box-shadow: -2px 6px 10px rgba(0, 0, 0, 0.1);
 }
 
 .spd1 {
-    margin: 3px 9px;
+    margin: 2px 5px;
     box-shadow: -2px 6px 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -121,13 +121,13 @@ export default {
     font-weight: 900;
     margin: 0px;
     padding: 1px 10px;
-    font-size: 10px;
+    font-size: 9px;
 }
 
 .mid-p {
     padding: 2px;
     background: #fff999;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 900;
     margin: 0px;
 

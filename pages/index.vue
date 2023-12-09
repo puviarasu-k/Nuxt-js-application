@@ -7,11 +7,12 @@
         <!-- form -->
         <form @submit="submit" class="login-container">
             <div class="right-side">
-                <img src="~/assets/image/DataCT.jpeg" loading="lazy" alt="logo">
+                <img src="~/assets/machine/3D_ENGINE.jpg" loading="lazy" alt="logo" class="rotate-image">
+                <p>ENGINE PROCEESS TRACEABILITY</p>
             </div>
             <div class="left-side">
                 <section>
-                    <h1>Dat<span style="color:#003A62">ACT</span></h1>
+                    <!-- <h1>Dat<span style="color:#003A62">ACT</span></h1> -->
                     <h2>SIGN IN</h2>
                     <div class="input-group">
                         <i>
@@ -146,13 +147,20 @@ definePageMeta({
 }
 
 .right-side {
-    width: 50%;
-    display: grid;
-    place-items: center;
+    // width: 50%;
+    // display: grid;
+    // place-items: center;
 
     & img {
-        width: 50%;
+        width: 60%;
+        border-radius: 20%;
     }
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: 800;
 }
 
 .login-page {
@@ -166,7 +174,7 @@ definePageMeta({
         display: flex;
         background: white;
         z-index: 1;
-        width: 60%;
+        width: 50%;
         height: 550px;
         border-radius: 40px;
     }
@@ -174,6 +182,18 @@ definePageMeta({
     >div {
         position: absolute;
         background-color: white;
+    }
+}
+.rotate-image {
+    animation: rotateAnimation 10s linear infinite; /* Adjust the duration as needed */
+}
+
+@keyframes rotateAnimation {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(-360deg); /* Adjust the rotation angle as needed */
     }
 }
 </style>

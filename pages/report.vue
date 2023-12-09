@@ -1,21 +1,30 @@
 <template>
     <div>
         <div class="mch">
-            <div style="position: relative">
+            <!-- <div style="position: relative">
                 <label for="machineType" class="over-title">Asset Type</label>
                 <select id="machineType" class="mch-type" v-model="machineType" @change="handleAssertType">
                     <option class="opt-md" :value="'DC'" selected>DC</option>
                     <option class="opt-md" :value="'LTM'" selected>LTM</option>
                 </select>
-            </div>
+            </div> -->
             <div style="position: relative">
-                <label for="selectedItem" class="over-title">Asset Code</label>
+                <label for="selectedItem" class="over-title">Station</label>
                 <select id="selectedItem" class="mch-dpd" v-model="selectedItem" @change="fetchMachineData">
                     <option v-if="selectedItem === ''" class="opt-md" :value="''" selected>
-                        Choose Asset Code
+                        Choose Station
                     </option>
-                    <option v-for="machine in machineList" :key="machine" class="opt-md" :value="machine.Asset_Code">
-                        {{ machine.Asset_Code }}
+                    <option class="opt-md" :value="'DC & LTM'" selected>
+                        DC & LTM
+                    </option>
+                    <option class="opt-md" :value="'DC'" selected>
+                        DC
+                    </option>
+                    <option class="opt-md" :value="'LTM'" selected>
+                        LTM
+                    </option>
+                    <option v-for="machine in machineList" :key="machine" class="opt-md" :value="machine.Asset_Name">
+                        {{ machine.Asset_Name }}
                     </option>
                 </select>
             </div>
@@ -26,6 +35,9 @@
             <div style="position: relative">
                 <label for="endDate" class="over-title">End Date</label>
                 <input id="endDate" type="date" class="date" v-model="endDate" placeholder="Search EIN Number" />
+            </div>
+            <div style="margin: -5px 5px;">
+                <p> Or </p>
             </div>
             <div style="position: relative">
                 <label for="search" class="over-title">Engine Number</label>
@@ -47,13 +59,30 @@
                 </button>
             </div>
         </div>
-        <div class="tabl">
+        <div class="tabl" v-if="selectedItem !== 'LTM'">
             <table>
                 <tr class="tr-cls">
-                    <th v-for="clm in machineColumn" :key="clm">{{ clm }}</th>
+                    <th v-for="clm in dcMachineColumn" :key="clm">{{ clm }}</th>
                 </tr>
-                <tr v-for="val in machineValue" :key="val">
-                    <td v-for="clm in machineColumn" :key="clm">{{ val[clm] }}</td>
+                <tr v-for="val in dcMachineValue" :key="val">
+                    <td v-for="clm in dcMachineColumn" :key="clm">{{ val[clm] }}</td>
+                </tr>
+                <tr v-if="dcMachineValue.length === 0">
+                    <td>No Records Found</td>
+                </tr>
+            </table>
+        </div>
+        <div v-if="ltmMachineValue.length > 0 || selectedItem === 'LTM' || selectedItem === 'DC & LTM'" class="tabl"
+            style="margin-top: 15px;">
+            <table>
+                <tr class="tr-cls">
+                    <th v-for="clm in ltmMachineColumn" :key="clm">{{ clm }}</th>
+                </tr>
+                <tr v-for="val in ltmMachineValue" :key="val">
+                    <td v-for="clm in ltmMachineColumn" :key="clm">{{ val[clm] }}</td>
+                </tr>
+                <tr v-if="ltmMachineValue.length === 0">
+                    <td>No Records Found</td>
                 </tr>
             </table>
         </div>
@@ -73,7 +102,7 @@ export default {
             selectedItem: "",
             machineList: [],
             search: "",
-            machineColumn: [
+            dcMachineColumn: [
                 "Engine_Number",
                 "Asset_Code",
                 "Asset_Type",
@@ -83,7 +112,18 @@ export default {
                 "Spindle_Count",
                 "Line",
             ],
-            machineValue: [],
+            dcMachineValue: [],
+            ltmMachineColumn: [
+                "Engine_Number",
+                "Asset_Code",
+                "Asset_Type",
+                "Asset_Name",
+                "Asset_Make",
+                "Asset_Model",
+                "Spindle_Count",
+                "Line",
+            ],
+            ltmMachineValue: [],
         };
     },
     created() {
@@ -171,10 +211,14 @@ export default {
                 const response = data?.data?._value;
                 if (response && response.statusCode === 200) {
                     if (response.data) {
-                        this.machineColumn = response.data.length
-                            ? Object.keys(response.data[0])
-                            : this.machineColumn;
-                        this.machineValue = response.data;
+                        this.dcMachineColumn = response.data.length
+                            ? Object.keys(response.data.dcMachine[0])
+                            : this.dcMachineColumn;
+                        this.dcMachineValue = response.data.dcMachine;
+                        this.ltmMachineColumn = response.data.length
+                            ? Object.keys(response.data.ltmMachine[0])
+                            : this.dcMachineColumn;
+                        this.ltmMachineValue = response.data.ltmMachine;
                     }
                 } else {
                     console.log("MachineListDetailsError", response);
@@ -209,7 +253,8 @@ export default {
         top: -8px;
         left: 15px;
         background-color: white;
-        font-weight: 900;
+        font-weight: 600;
+        font-size: 14px;
     }
 
     .submit {
@@ -217,7 +262,7 @@ export default {
         padding: 8px 32px;
         border-radius: 20px;
         background: #003960;
-        font-size: 15px;
+        font-size: 14px;
         font-weight: 900;
         color: white;
     }
@@ -227,7 +272,7 @@ export default {
         padding: 8px 32px;
         border-radius: 20px;
         background: #00c153;
-        font-size: 15px;
+        font-size: 14px;
         font-weight: 900;
         color: white;
     }
@@ -237,7 +282,7 @@ export default {
         padding: 8px 12px;
         border-radius: 20px;
         background: red;
-        font-size: 15px;
+        font-size: 14px;
         font-weight: 900;
         color: white;
         width: 100px;
